@@ -3,20 +3,32 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include<glm/mat4x4.hpp>
 
 const GLint WIDTH = 800, HEIGHT = 600;
 
-GLuint VAO, VBO, shader;
+GLuint VAO, VBO, shader, uniformXMove;
+
+bool direction = true;
+float triOffset = 0.0f;
+float triMaxOffset = 0.7f;
+float triIncrement = 0.0005f;
+
 
 // Vertex Shader
-static const char* vShader = "						\n\
-#version 330										\n\
-													\n\
-layout (position = 0) in vec3 pos;					\n\
-													\n\
-void main()											\n\
-{													\n\
-	gl_Position = vec4(pos.x, pos.y, pos.z, 1.0);	\n\
+static const char* vShader = "											\n\
+#version 330															\n\
+																		\n\
+layout (location = 0) in vec3 pos;										\n\
+																		\n\
+																		\n\
+uniform float xMove;													\n\
+																		\n\
+																		\n\
+void main()																\n\
+{																		\n\
+	gl_Position = vec4(0.4 * pos.x + xMove, 0.4 * pos.y, pos.z, 1.0);	\n\
 }";
 
 // Fragment shader
@@ -27,7 +39,7 @@ out vec4 color;										\n\
 													\n\
 void main()											\n\
 {													\n\
-	color = vec4(0.0, 1.0, 0.0, 1.0);				\n\
+	color = vec4(0.0, 0.0, 1.0, 1.0);				\n\
 }";
 
 void CreateTriangle()
@@ -85,7 +97,7 @@ void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType)
 	if (!result)
 	{
 		// Create log
-		glGetShaderInfoLog(theShader, sizeof(eLog), NULL, eLog);
+		glGetShaderInfoLog(theShader, 1024, NULL, eLog);
 		printf("Error compiling %d shader: %s.\n",shaderType, eLog);
 		return;
 	}
@@ -136,6 +148,8 @@ void CompileShaders()
 		printf("Error validating program: %s.\n", eLog);
 		return;
 	}
+
+	uniformXMove = glGetUniformLocation(shader, "xMove");
 
 }
 
@@ -191,12 +205,31 @@ int main()
 		// Get / Handle input events
 		glfwPollEvents();
 
+		if (direction)
+		{
+			triOffset += triIncrement;
+		}
+		else
+		{
+			triOffset -= triIncrement;
+		}
+
+		if (abs(triOffset) >= triMaxOffset)
+		{
+			direction = !direction;
+		}
+
+
 		// Clear window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// assigns shader
 		glUseProgram(shader);
+
+		// updates uniform value with triOffset
+		glUniform1f(uniformXMove, triOffset);
+
 		// assigns array
 		glBindVertexArray(VAO);
 
