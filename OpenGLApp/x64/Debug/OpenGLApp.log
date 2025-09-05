@@ -1,0 +1,16 @@
+﻿  OpenGLApp.cpp
+OpenGLApp.obj : error LNK2019: unresolved external symbol __imp_glewInit referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwInit referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwTerminate referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwWindowHint referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwCreateWindow referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwDestroyWindow referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwWindowShouldClose referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwGetFramebufferSize referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwPollEvents referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwMakeContextCurrent referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol glfwSwapBuffers referenced in function main
+OpenGLApp.obj : error LNK2019: unresolved external symbol __imp_glewExperimental referenced in function main
+C:\Projects\OpenGL\glew\lib\release\win32\glew32.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Projects\OpenGL\glfw\lib-vc2022\glfw3.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Projects\OpenGL\x64\Debug\OpenGLApp.exe : fatal error LNK1120: 12 unresolved externals

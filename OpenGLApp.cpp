@@ -1,8 +1,44 @@
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 #include <iostream>
+#include <stdio.h>
+#include <string.h>
 
 const GLint WIDTH = 800, HEIGHT = 600;
+
+GLuint VAO, VBO, shader;
+
+// Vertex Shader
+// TODO: HERE 14:48 [Coding] Shaders and First Triangle
+
+void CreateTriangle()
+{
+	GLfloat vertices[] =
+	{
+		// X, Y, Z
+		-1.0, -1.0, 0.0,
+		1.0, -1.0, 0.0,
+		0,0, 1.0, 0.0
+	};
+
+	// Binding VAO to VertexArray
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+		glGenBuffers(1, &VBO);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+			// GL_STATIC_DRAW: Not changing array points
+			// GL_DYNAIC_DRAW: Changing array points
+
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+			glEnableVertexAttribArray(0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	// Unbinding from Array
+	glBindVertexArray(0);
+
+}
 
 int main()
 {
