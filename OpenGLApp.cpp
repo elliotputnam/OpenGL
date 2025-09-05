@@ -9,16 +9,35 @@ const GLint WIDTH = 800, HEIGHT = 600;
 GLuint VAO, VBO, shader;
 
 // Vertex Shader
-// TODO: HERE 14:48 [Coding] Shaders and First Triangle
+static const char* vShader = "						\n\
+#version 330										\n\
+													\n\
+layout (position = 0) in vec3 pos;					\n\
+													\n\
+void main()											\n\
+{													\n\
+	gl_Position = vec4(pos.x, pos.y, pos.z, 1.0);	\n\
+}";
+
+// Fragment shader
+static const char* fShader = "						\n\
+#version 330										\n\
+													\n\
+out vec4 color;										\n\
+													\n\
+void main()											\n\
+{													\n\
+	color = vec4(0.0, 1.0, 0.0, 1.0);				\n\
+}";
 
 void CreateTriangle()
 {
 	GLfloat vertices[] =
 	{
 		// X, Y, Z
-		-1.0, -1.0, 0.0,
-		1.0, -1.0, 0.0,
-		0,0, 1.0, 0.0
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f
 	};
 
 	// Binding VAO to VertexArray
@@ -37,6 +56,86 @@ void CreateTriangle()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	// Unbinding from Array
 	glBindVertexArray(0);
+
+}
+
+void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType)
+{
+	// Creates empty shader that takes shader type
+	GLuint theShader = glCreateShader(shaderType);
+
+	// pointer to shader code
+	const GLchar* theCode[1];
+	theCode[0] = shaderCode;
+
+	GLint codeLength[1];
+	codeLength[0] = strlen(shaderCode);
+
+	// grabs shader code and compiles it
+	glShaderSource(theShader, 1, theCode, codeLength);
+	glCompileShader(theShader);
+
+	// Error logging
+	GLint result = 0;
+	GLchar eLog[1024] = { 0 };
+
+	// Stores compile status into result of shader
+	glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
+
+	if (!result)
+	{
+		// Create log
+		glGetShaderInfoLog(theShader, sizeof(eLog), NULL, eLog);
+		printf("Error compiling %d shader: %s.\n",shaderType, eLog);
+		return;
+	}
+	// attaches shader to program
+	glAttachShader(theProgram, theShader);
+}
+
+void CompileShaders()
+{
+	// create shader
+	shader = glCreateProgram();
+
+	// validate
+	if (!shader)
+	{
+		printf("Shader failed to create.");
+		return;
+	}
+	AddShader(shader, vShader, GL_VERTEX_SHADER);
+	AddShader(shader, fShader, GL_FRAGMENT_SHADER);
+	 
+	// Error logging
+	GLint result = 0;
+	GLchar eLog[1024] = { 0 };
+
+	// Creates executables on the GPU
+	glLinkProgram(shader);
+	// Stores link status into result of shader
+	glGetProgramiv(shader, GL_LINK_STATUS, &result);
+
+	if (!result)
+	{
+		// Create log
+		glGetProgramInfoLog(shader, sizeof(eLog), NULL, eLog);
+		printf("Error linking program: %s.\n", eLog);
+		return;
+	}
+
+	glValidateProgram(shader);
+
+	// Stores validation status into result of shader
+	glGetProgramiv(shader, GL_VALIDATE_STATUS, &result);
+
+	if (!result)
+	{
+		// Create log
+		glGetProgramInfoLog(shader, sizeof(eLog), NULL, eLog);
+		printf("Error validating program: %s.\n", eLog);
+		return;
+	}
 
 }
 
@@ -83,6 +182,9 @@ int main()
 	// Setup viewport size
 	glViewport(0, 0, bufferWidth, bufferHeight);
 
+	CreateTriangle();
+	CompileShaders();
+
 	// loop until window closes
 	while (!glfwWindowShouldClose(mainWindow))
 	{
@@ -90,8 +192,21 @@ int main()
 		glfwPollEvents();
 
 		// Clear window
-		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		// assigns shader
+		glUseProgram(shader);
+		// assigns array
+		glBindVertexArray(VAO);
+
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		// unassigns array
+		glBindVertexArray(0);
+		// unassigns shader
+		glUseProgram(0);
 
 		// Swap drawn and drawing buffers
 		glfwSwapBuffers(mainWindow);

@@ -1,12 +1,37 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Projects\\OpenGL\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Workspace\\OpenGL\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OpenGLApp.cpp",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\OpenGLApp.cpp",
+              "RelativeDocumentMoniker": "OpenGLApp.cpp",
+              "ToolTip": "C:\\Workspace\\OpenGL\\OpenGLApp.cpp",
+              "RelativeToolTip": "OpenGLApp.cpp",
+              "ViewState": "AgIAADMAAACAWWZmZuYcwCcAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-05T01:10:02.512Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
