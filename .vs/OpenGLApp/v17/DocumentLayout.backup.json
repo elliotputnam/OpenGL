@@ -1,13 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Workspace\\OpenGL\\",
+  "WorkspaceRootPath": "C:\\Projects\\OpenGL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\goofercat\\AppData\\Local\\Temp\\0250d543-459d-4b2d-9565-13a28a53467f_OpenGLCourseApp_Triangle.zip.67f\\OpenGLCourseApp\\OpenGLCourseApp\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -17,30 +14,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\goofercat\\AppData\\Local\\Temp\\0250d543-459d-4b2d-9565-13a28a53467f_OpenGLCourseApp_Triangle.zip.67f\\OpenGLCourseApp\\OpenGLCourseApp\\main.cpp",
-              "RelativeDocumentMoniker": "..\\..\\Users\\goofercat\\AppData\\Local\\Temp\\0250d543-459d-4b2d-9565-13a28a53467f_OpenGLCourseApp_Triangle.zip.67f\\OpenGLCourseApp\\OpenGLCourseApp\\main.cpp",
-              "ToolTip": "C:\\Users\\goofercat\\AppData\\Local\\Temp\\0250d543-459d-4b2d-9565-13a28a53467f_OpenGLCourseApp_Triangle.zip.67f\\OpenGLCourseApp\\OpenGLCourseApp\\main.cpp [Read Only]",
-              "RelativeToolTip": "..\\..\\Users\\goofercat\\AppData\\Local\\Temp\\0250d543-459d-4b2d-9565-13a28a53467f_OpenGLCourseApp_Triangle.zip.67f\\OpenGLCourseApp\\OpenGLCourseApp\\main.cpp [Read Only]",
-              "ViewState": "AgIAAAgAAACAKzMzMzMbwAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-05T13:33:56.948Z",
-              "EditorCaption": " [Read Only]"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "OpenGLApp.cpp",
-              "DocumentMoniker": "C:\\Workspace\\OpenGL\\OpenGLApp.cpp",
+              "DocumentMoniker": "C:\\Projects\\OpenGL\\OpenGLApp.cpp",
               "RelativeDocumentMoniker": "OpenGLApp.cpp",
-              "ToolTip": "C:\\Workspace\\OpenGL\\OpenGLApp.cpp",
+              "ToolTip": "C:\\Projects\\OpenGL\\OpenGLApp.cpp",
               "RelativeToolTip": "OpenGLApp.cpp",
-              "ViewState": "AgIAANsAAAAAIAAAAAACwOQAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAANwAAAAAAAAAAAAiwO8AAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-05T01:10:02.512Z",
               "EditorCaption": ""
