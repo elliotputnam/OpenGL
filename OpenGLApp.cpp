@@ -7,11 +7,15 @@
 #include <glm/glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtc\type_ptr.hpp>
+#include <vector>
+#include "Mesh.h"
+#include "Shader.h"
 
 const GLint WIDTH = 800, HEIGHT = 600;
 const float toRadians = 3.14159265f / 180.0f;
 
-GLuint VAO, VBO, IBO, shader, uniformModel;
+std::vector<Mesh*> meshList;
+std::vector<Shader> shaderList;
 
 bool direction = true;
 float triOffset = 0.0f;
@@ -26,35 +30,12 @@ float minSize = 0.1f;
 
 // Vertex Shader
 // clamp() keeps input values within specified range (0 - 1), removing negatives in position.
-static const char* vShader = "											\n\
-#version 330															\n\
-																		\n\
-layout (location = 0) in vec3 pos;										\n\
-																		\n\
-out vec4 vCol;															\n\
-																		\n\
-uniform mat4 model;														\n\
-																		\n\
-void main()																\n\
-{																		\n\
-	gl_Position = model * vec4(pos, 1.0);								\n\
-	vCol = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);							\n\
-}";
+static const char* vShader = "Shaders/shader.vert";
 
 // Fragment shader
-static const char* fShader = "						\n\
-#version 330										\n\
-													\n\
-in vec4 vCol;										\n\
-													\n\
-out vec4 color;										\n\
-													\n\
-void main()											\n\
-{													\n\
-	color = vCol;									\n\
-}";
+static const char* fShader = "Shaders/shader.frag";
 
-void CreateTriangle()
+void CreateObjects()
 {
 	unsigned int indices[] =
 	{
@@ -72,113 +53,20 @@ void CreateTriangle()
 		1.0f, -1.0f, 0.0f,
 		0.0f, 1.0f, 0.0f
 	};
+	Mesh *obj1 = new Mesh();
+	obj1->CreateMesh(vertices, indices, 12, 12);
+	meshList.push_back(obj1);
 
-	// Binding VAO to VertexArray
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	// index buffer
-	glGenBuffers(1, &IBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-		glGenBuffers(1, &VBO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-			// GL_STATIC_DRAW: Not changing array points
-			// GL_DYNAIC_DRAW: Changing array points
-
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-			glEnableVertexAttribArray(0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	// Unbinding from Array
-	glBindVertexArray(0);
-	// unbinding index buffer, do AFTER array buffer
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+	Mesh *obj2 = new Mesh();
+	obj2->CreateMesh(vertices, indices, 12, 12);
+	meshList.push_back(obj2);
 }
 
-void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType)
+void CreateShaders()
 {
-	// Creates empty shader that takes shader type
-	GLuint theShader = glCreateShader(shaderType);
-
-	// pointer to shader code
-	const GLchar* theCode[1];
-	theCode[0] = shaderCode;
-
-	GLint codeLength[1];
-	codeLength[0] = strlen(shaderCode);
-
-	// grabs shader code and compiles it
-	glShaderSource(theShader, 1, theCode, codeLength);
-	glCompileShader(theShader);
-
-	// Error logging
-	GLint result = 0;
-	GLchar eLog[1024] = { 0 };
-
-	// Stores compile status into result of shader
-	glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
-
-	if (!result)
-	{
-		// Create log
-		glGetShaderInfoLog(theShader, 1024, NULL, eLog);
-		printf("Error compiling %d shader: %s.\n",shaderType, eLog);
-		return;
-	}
-	// attaches shader to program
-	glAttachShader(theProgram, theShader);
-}
-
-void CompileShaders()
-{
-	// create shader
-	shader = glCreateProgram();
-
-	// validate
-	if (!shader)
-	{
-		printf("Shader failed to create.");
-		return;
-	}
-	AddShader(shader, vShader, GL_VERTEX_SHADER);
-	AddShader(shader, fShader, GL_FRAGMENT_SHADER);
-	 
-	// Error logging
-	GLint result = 0;
-	GLchar eLog[1024] = { 0 };
-
-	// Creates executables on the GPU
-	glLinkProgram(shader);
-	// Stores link status into result of shader
-	glGetProgramiv(shader, GL_LINK_STATUS, &result);
-
-	if (!result)
-	{
-		// Create log
-		glGetProgramInfoLog(shader, sizeof(eLog), NULL, eLog);
-		printf("Error linking program: %s.\n", eLog);
-		return;
-	}
-
-	glValidateProgram(shader);
-
-	// Stores validation status into result of shader
-	glGetProgramiv(shader, GL_VALIDATE_STATUS, &result);
-
-	if (!result)
-	{
-		// Create log
-		glGetProgramInfoLog(shader, sizeof(eLog), NULL, eLog);
-		printf("Error validating program: %s.\n", eLog);
-		return;
-	}
-
-	uniformModel = glGetUniformLocation(shader, "model");
-
+	Shader* shader1 = new Shader();
+	shader1->CreateFromFiles(vShader, fShader);
+	shaderList.push_back(*shader1);
 }
 
 int main()
@@ -227,8 +115,13 @@ int main()
 	// Setup viewport size
 	glViewport(0, 0, bufferWidth, bufferHeight);
 
-	CreateTriangle();
-	CompileShaders();
+	CreateObjects();
+	CreateShaders();
+
+	GLuint uniformProjection = 0, uniformModel = 0;
+
+	// setup projection
+	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)bufferWidth / (GLfloat)bufferHeight, 0.1f, 100.0f);
 
 	// loop until window closes
 	while (!glfwWindowShouldClose(mainWindow))
@@ -278,35 +171,34 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// assigns shader
-		glUseProgram(shader);
+		shaderList[0].UseShader();
+		uniformModel = shaderList[0].GetModelLocation();
+		uniformProjection = shaderList[0].GetProjectionLocation();
 
 		// Mat4 = Matrix 4x4
 		glm::mat4 model(1.0f);
 
 		//// translate(OBJECT, OFFSET)
-		//model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
 		//// rotate(OBJECT, ROTATION (in Rad), AXIS(x, y, z))
-		model = glm::rotate(model, currAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//// sacle(OBJECT, vec3)
+		model = glm::translate(model, glm::vec3(triOffset, 0.0f, -2.5f));
+		//model = glm::rotate(model, currAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 
+		meshList[0]->RenderMesh();
+
+		model = glm::mat4(1.0f);
+
+		model = glm::translate(model, glm::vec3(-triOffset, 1.0f, -2.5f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
-		// assigns array
-		glBindVertexArray(VAO);
-		// assigns index buffer
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+		meshList[1]->RenderMesh();
+		
 
-
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
-
-
-		// unassigns array
-		// index buffer
-		// unassigns shader
-		glBindVertexArray(0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glUseProgram(0);
 
 		// Swap drawn and drawing buffers
