@@ -27,8 +27,7 @@ std::string Shader::ReadFile(const char* fileLocation)
 	std::string content;
 	std::ifstream fileStream(fileLocation, std::ios::in);
 
-	if (!fileStream.is_open())
-	{
+	if (!fileStream.is_open()) {
 		printf("Failed to read %s! File doesn't exist.", fileLocation);
 		return "";
 	}
@@ -46,57 +45,46 @@ std::string Shader::ReadFile(const char* fileLocation)
 
 void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
 {
-	// create shader
 	shaderID = glCreateProgram();
 
-	// validate
 	if (!shaderID)
 	{
-		printf("Shader failed to create.");
+		printf("Error creating shader program!\n");
 		return;
 	}
+
 	AddShader(shaderID, vertexCode, GL_VERTEX_SHADER);
 	AddShader(shaderID, fragmentCode, GL_FRAGMENT_SHADER);
 
-	// Error logging
 	GLint result = 0;
 	GLchar eLog[1024] = { 0 };
 
-	// Creates executables on the GPU
 	glLinkProgram(shaderID);
-	// Stores link status into result of shader
 	glGetProgramiv(shaderID, GL_LINK_STATUS, &result);
-
 	if (!result)
 	{
-		// Create log
 		glGetProgramInfoLog(shaderID, sizeof(eLog), NULL, eLog);
-		printf("Error linking program: %s.\n", eLog);
+		printf("Error linking program: '%s'\n", eLog);
 		return;
 	}
 
 	glValidateProgram(shaderID);
-
-	// Stores validation status into result of shader
 	glGetProgramiv(shaderID, GL_VALIDATE_STATUS, &result);
-
 	if (!result)
 	{
-		// Create log
 		glGetProgramInfoLog(shaderID, sizeof(eLog), NULL, eLog);
-		printf("Error validating program: %s.\n", eLog);
+		printf("Error validating program: '%s'\n", eLog);
 		return;
 	}
 
-	uniformModel = glGetUniformLocation(shaderID, "model");
 	uniformProjection = glGetUniformLocation(shaderID, "projection");
+	uniformModel = glGetUniformLocation(shaderID, "model");
 }
 
 GLuint Shader::GetProjectionLocation()
 {
 	return uniformProjection;
 }
-
 GLuint Shader::GetModelLocation()
 {
 	return uniformModel;
@@ -119,42 +107,33 @@ void Shader::ClearShader()
 	uniformProjection = 0;
 }
 
+
 void Shader::AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType)
 {
-	// Creates empty shader that takes shader type
 	GLuint theShader = glCreateShader(shaderType);
 
-	// pointer to shader code
 	const GLchar* theCode[1];
 	theCode[0] = shaderCode;
 
 	GLint codeLength[1];
 	codeLength[0] = strlen(shaderCode);
 
-	// grabs shader code and compiles it
 	glShaderSource(theShader, 1, theCode, codeLength);
 	glCompileShader(theShader);
 
-	// Error logging
 	GLint result = 0;
 	GLchar eLog[1024] = { 0 };
 
-	// Stores compile status into result of shader
 	glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
-
 	if (!result)
 	{
-		// Create log
-		glGetShaderInfoLog(theShader, 1024, NULL, eLog);
-		printf("Error compiling %d shader: %s.\n", shaderType, eLog);
+		glGetShaderInfoLog(theShader, sizeof(eLog), NULL, eLog);
+		printf("Error compiling the %d shader: '%s'\n", shaderType, eLog);
 		return;
 	}
-	// attaches shader to program
+
 	glAttachShader(theProgram, theShader);
 }
-
-
-
 
 Shader::~Shader()
 {

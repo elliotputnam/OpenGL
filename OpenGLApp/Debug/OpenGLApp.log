@@ -1,2 +1,8 @@
 ﻿  OpenGLApp.cpp
-  OpenGLApp.vcxproj -> C:\Projects\OpenGL\Debug\OpenGLApp.exe
+C:\Workspace\OpenGL\Window.h(18,10): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+  (compiling source file 'OpenGLApp.cpp')
+  
+C:\Workspace\OpenGL\Window.h(22,10): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+  (compiling source file 'OpenGLApp.cpp')
+  
+  OpenGLApp.vcxproj -> C:\Workspace\OpenGL\Debug\OpenGLApp.exe

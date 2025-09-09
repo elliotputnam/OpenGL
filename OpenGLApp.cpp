@@ -10,8 +10,9 @@
 #include <vector>
 #include "Mesh.h"
 #include "Shader.h"
+#include "Window.h"
 
-const GLint WIDTH = 800, HEIGHT = 600;
+Window mainWindow;
 const float toRadians = 3.14159265f / 180.0f;
 
 std::vector<Mesh*> meshList;
@@ -20,7 +21,7 @@ std::vector<Shader> shaderList;
 bool direction = true;
 float triOffset = 0.0f;
 float triMaxOffset = 0.7f;
-float triIncrement = 0.01f;
+float triIncrement = 0.001f;
 float currAngle = 0.0f;
 
 bool sizeDirection = true;
@@ -71,49 +72,8 @@ void CreateShaders()
 
 int main()
 {
-	// INIT GLFW
-	if (!glfwInit())
-	{
-		printf("GLFW Init failed.");
-		glfwTerminate();
-		return 1;
-	}
-
-	// SETUP GLFW window props
-	// OpenGL Version
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
-	// Core profile
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	// Allow forward compat
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-	GLFWwindow* mainWindow = glfwCreateWindow(WIDTH, HEIGHT, "OpenGL", NULL, NULL);
-
-	// Get buffer size info
-	int bufferWidth, bufferHeight;
-	glfwGetFramebufferSize(mainWindow, &bufferWidth, &bufferHeight);
-
-	// Set context for GLEW to use
-	glfwMakeContextCurrent(mainWindow);
-
-	// Allow modern extensions
-	glewExperimental = GL_TRUE;
-
-	if (glewInit() != GLEW_OK)
-	{
-		printf("GLEW Init failed.");
-		glfwDestroyWindow(mainWindow);
-		glfwTerminate();
-		return 1;
-	}
-
-	// enables gl stuff
-	glEnable(GL_DEPTH_TEST);
-
-	// Setup viewport size
-	glViewport(0, 0, bufferWidth, bufferHeight);
+	mainWindow = Window(800, 600);
+	mainWindow.Initialize();
 
 	CreateObjects();
 	CreateShaders();
@@ -121,10 +81,10 @@ int main()
 	GLuint uniformProjection = 0, uniformModel = 0;
 
 	// setup projection
-	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)bufferWidth / (GLfloat)bufferHeight, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(45.0f, mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
 
 	// loop until window closes
-	while (!glfwWindowShouldClose(mainWindow))
+	while (!mainWindow.getWindowShouldClose())
 	{
 		// Get / Handle input events
 		glfwPollEvents();
@@ -202,7 +162,7 @@ int main()
 		glUseProgram(0);
 
 		// Swap drawn and drawing buffers
-		glfwSwapBuffers(mainWindow);
+		mainWindow.swapBuffers();
 	}
 
 	return 0;
