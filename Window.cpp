@@ -3,9 +3,11 @@
 
 Window::Window()
 {
+	// window size
 	width = 800;
 	height = 600;
 
+	// initializes keys to off
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[0] = 0;
@@ -14,9 +16,11 @@ Window::Window()
 
 Window::Window(GLint windowWidth, GLint windowHeight)
 {
+	// window size
 	width = windowWidth;
 	height = windowHeight;
 	
+	// initializes keys to off
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[0] = 0;
@@ -52,6 +56,12 @@ int Window::Initialize()
 	// Set context for GLEW to use
 	glfwMakeContextCurrent(mainWindow);
 
+	// Handle key + mouse inputs
+	createCallbacks();
+
+	// disable cursor (locking it to screen)
+	glfwSetInputMode(mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	// Allow modern extensions
 	glewExperimental = GL_TRUE;
 
@@ -73,9 +83,66 @@ int Window::Initialize()
 	glfwSetWindowUserPointer(mainWindow, this);
 }
 
-void handleKeys(GLFWwindow* window, int key, int code, int action, int mode)
+void Window::createCallbacks()
+{
+	// When a key is pressed in mainWindow, pass in handleKeys
+	glfwSetKeyCallback(mainWindow, handleKeys);
+	glfwSetCursorPosCallback(mainWindow, handleMous);
+}
+
+GLfloat Window::getXChange()
+{
+	GLfloat theChange = xChange;
+	xChange = 0.0f;
+	return theChange;
+}
+
+GLfloat Window::getYChange()
+{
+	GLfloat theChange = yChange;
+	yChange = 0.0f;
+	return theChange;
+}
+
+void Window::handleKeys(GLFWwindow* window, int key, int code, int action, int mode)
 {
 	Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	}
+
+	if (key >= 0 && key < 1024)
+	{
+		if (action == GLFW_PRESS)
+		{
+			theWindow->keys[key] = true;
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			theWindow->keys[key] = false;
+		}
+	}
+}
+
+void Window::handleMous(GLFWwindow* window, double xPos, double yPos)
+{
+	Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
+	// handles first move so screen doesn't jump
+	if (theWindow->mouseFirstMoved)
+	{
+		theWindow->lastX = xPos;
+		theWindow->mouseFirstMoved = false;
+	}
+
+	theWindow->xChange = xPos - theWindow->lastX;
+	theWindow->yChange = theWindow->lastY - yPos; // swapped to avoid inverted up and down
+
+	// new coordinates
+	theWindow->lastY = yPos;
+	theWindow->lastY = yPos;
 }
 
 Window::~Window()

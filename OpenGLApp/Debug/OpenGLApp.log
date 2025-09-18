@@ -1,8 +1,14 @@
-﻿  OpenGLApp.cpp
-C:\Workspace\OpenGL\Window.h(18,10): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
-  (compiling source file 'OpenGLApp.cpp')
+﻿  Window.cpp
+C:\Workspace\OpenGL\Window.h(16,35): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+  (compiling source file 'Window.cpp')
   
-C:\Workspace\OpenGL\Window.h(22,10): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
-  (compiling source file 'OpenGLApp.cpp')
+C:\Workspace\OpenGL\Window.h(17,36): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+  (compiling source file 'Window.cpp')
   
+C:\Workspace\OpenGL\Window.cpp(136,22): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Workspace\OpenGL\Window.cpp(140,28): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Workspace\OpenGL\Window.cpp(141,40): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Workspace\OpenGL\Window.cpp(144,21): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Workspace\OpenGL\Window.cpp(145,21): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Workspace\OpenGL\Window.cpp(84,1): warning C4715: 'Window::Initialize': not all control paths return a value
   OpenGLApp.vcxproj -> C:\Workspace\OpenGL\Debug\OpenGLApp.exe
