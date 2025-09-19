@@ -1,14 +1,19 @@
-﻿  Window.cpp
+﻿  Mesh.cpp
+  OpenGLApp.cpp
 C:\Workspace\OpenGL\Window.h(16,35): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
-  (compiling source file 'Window.cpp')
+  (compiling source file 'OpenGLApp.cpp')
   
 C:\Workspace\OpenGL\Window.h(17,36): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
-  (compiling source file 'Window.cpp')
+  (compiling source file 'OpenGLApp.cpp')
   
-C:\Workspace\OpenGL\Window.cpp(136,22): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Workspace\OpenGL\Window.cpp(140,28): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Workspace\OpenGL\Window.cpp(141,40): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Workspace\OpenGL\Window.cpp(144,21): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Workspace\OpenGL\Window.cpp(145,21): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Workspace\OpenGL\Window.cpp(84,1): warning C4715: 'Window::Initialize': not all control paths return a value
-  OpenGLApp.vcxproj -> C:\Workspace\OpenGL\Debug\OpenGLApp.exe
+C:\Workspace\OpenGL\OpenGLApp.cpp(108,15): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+  Texture.cpp
+C:\Workspace\OpenGL\Texture.cpp(9,17): error C2440: '=': cannot convert from 'const char [1]' to 'char *'
+      C:\Workspace\OpenGL\Texture.cpp(9,17):
+      Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+  
+C:\Workspace\OpenGL\Texture.cpp(66,17): error C2440: '=': cannot convert from 'const char [1]' to 'char *'
+      C:\Workspace\OpenGL\Texture.cpp(66,17):
+      Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+  
+  Generating Code...

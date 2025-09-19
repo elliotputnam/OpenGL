@@ -1,22 +1,35 @@
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include <iostream>
+#define STB_IMAGE_IMPLEMENTATION
+
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
-#include <glm/glm.hpp>
+#include <cmath>
+#include <vector>
+
+#include <GL\glew.h>
+#include <GLFW\glfw3.h>
+
+#include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtc\type_ptr.hpp>
-#include <vector>
+
+#include "Window.h"
 #include "Mesh.h"
 #include "Shader.h"
-#include "Window.h"
+#include "Camera.h"
+#include "Texture.h"
 
-Window mainWindow;
 const float toRadians = 3.14159265f / 180.0f;
 
+Window mainWindow;
 std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
+Camera camera;
+
+Texture brickTexture;
+Texture dirtTexture;
+
+GLfloat deltaTime = 0.0f;
+GLfloat lastTime = 0.0f;
 
 bool direction = true;
 float triOffset = 0.0f;
@@ -78,7 +91,15 @@ int main()
 	CreateObjects();
 	CreateShaders();
 
-	GLuint uniformProjection = 0, uniformModel = 0;
+	// init camera
+	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 3.0f, 0.05f);
+
+	brickTexture = Texture("Textures/brick.png");
+	brickTexture.LoadTexture();
+	dirtTexture = Texture("Textures/brick.png");
+	dirtTexture.LoadTexture();
+
+	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0;
 
 	// setup projection
 	glm::mat4 projection = glm::perspective(45.0f, mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
@@ -86,8 +107,15 @@ int main()
 	// loop until window closes
 	while (!mainWindow.getWindowShouldClose())
 	{
+		GLfloat now = glfwGetTime(); // SDL_GetPerformanceCounter(); milliseconds
+		deltaTime = now - lastTime; // (now - lastTime)*1000 / SDL_GetPerformanceCounter() seconds
+		lastTime = now;
+
 		// Get / Handle input events
 		glfwPollEvents();
+		// Passes inputs into camera
+		camera.KeyControl(mainWindow.getsKeys(), deltaTime);
+		camera.MouseControl(mainWindow.getXChange(), mainWindow.getYChange());
 
 		if (direction)
 		{
@@ -134,6 +162,7 @@ int main()
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
+		uniformView = shaderList[0].GetViewLocation();
 
 		// Mat4 = Matrix 4x4
 		glm::mat4 model(1.0f);
@@ -147,6 +176,7 @@ int main()
 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 
 		meshList[0]->RenderMesh();
 

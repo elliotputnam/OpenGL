@@ -3,6 +3,7 @@
 
 Window::Window()
 {
+
 	// window size
 	width = 800;
 	height = 600;
@@ -10,12 +11,16 @@ Window::Window()
 	// initializes keys to off
 	for (size_t i = 0; i < 1024; i++)
 	{
-		keys[0] = 0;
+		keys[i] = 0;
 	}
+
+	xChange = 0.0f;
+	yChange = 0.0f;
 }
 
 Window::Window(GLint windowWidth, GLint windowHeight)
 {
+
 	// window size
 	width = windowWidth;
 	height = windowHeight;
@@ -23,9 +28,11 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	// initializes keys to off
 	for (size_t i = 0; i < 1024; i++)
 	{
-		keys[0] = 0;
+		keys[i] = 0;
 	}
 
+	xChange = 0.0f;
+	yChange = 0.0f;
 }
 
 int Window::Initialize()
@@ -92,16 +99,16 @@ void Window::createCallbacks()
 
 GLfloat Window::getXChange()
 {
-	GLfloat theChange = xChange;
+	GLfloat theXChange = xChange;
 	xChange = 0.0f;
-	return theChange;
+	return theXChange;
 }
 
 GLfloat Window::getYChange()
 {
-	GLfloat theChange = yChange;
+	GLfloat theYChange = yChange;
 	yChange = 0.0f;
-	return theChange;
+	return theYChange;
 }
 
 void Window::handleKeys(GLFWwindow* window, int key, int code, int action, int mode)
@@ -134,6 +141,7 @@ void Window::handleMous(GLFWwindow* window, double xPos, double yPos)
 	if (theWindow->mouseFirstMoved)
 	{
 		theWindow->lastX = xPos;
+		theWindow->lastY = yPos;
 		theWindow->mouseFirstMoved = false;
 	}
 
@@ -141,7 +149,7 @@ void Window::handleMous(GLFWwindow* window, double xPos, double yPos)
 	theWindow->yChange = theWindow->lastY - yPos; // swapped to avoid inverted up and down
 
 	// new coordinates
-	theWindow->lastY = yPos;
+	theWindow->lastX = xPos;
 	theWindow->lastY = yPos;
 }
 
