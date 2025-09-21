@@ -15,10 +15,11 @@ public:
 	void ClearTexture();
 
 	~Texture();
+
 private:
 	GLuint textureID;
 	int width, height, bitDepth;
 
-	char* fileLocation;
+	const char* fileLocation;
 };
 

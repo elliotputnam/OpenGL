@@ -34,7 +34,7 @@ GLfloat lastTime = 0.0f;
 bool direction = true;
 float triOffset = 0.0f;
 float triMaxOffset = 0.7f;
-float triIncrement = 0.001f;
+float triIncrement = 0.01f;
 float currAngle = 0.0f;
 
 bool sizeDirection = true;
@@ -48,6 +48,7 @@ static const char* vShader = "Shaders/shader.vert";
 
 // Fragment shader
 static const char* fShader = "Shaders/shader.frag";
+static const char* fShaderRb = "Shaders/shaderSpectrum.frag";
 
 void CreateObjects()
 {
@@ -61,19 +62,27 @@ void CreateObjects()
 
 	GLfloat vertices[] =
 	{
-		// X, Y, Z
-		-1.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f
+		//X     Y     Z        U     V
+		-1.0f, -1.0f, 0.0f,	  0.0f, 0.0f,
+		0.0f, -1.0f, 1.0f,    0.5f, 0.0f,
+		1.0f, -1.0f, 0.0f,    1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,     0.5f, 1.0f
 	};
 	Mesh *obj1 = new Mesh();
-	obj1->CreateMesh(vertices, indices, 12, 12);
+	obj1->CreateMesh(vertices, indices, 20, 12);
 	meshList.push_back(obj1);
 
 	Mesh *obj2 = new Mesh();
-	obj2->CreateMesh(vertices, indices, 12, 12);
+	obj2->CreateMesh(vertices, indices, 20, 12);
 	meshList.push_back(obj2);
+	
+	Mesh *obj3 = new Mesh();
+	obj3->CreateMesh(vertices, indices, 20, 12);
+	meshList.push_back(obj3);
+	
+	Mesh *obj4 = new Mesh();
+	obj4->CreateMesh(vertices, indices, 20, 12);
+	meshList.push_back(obj4);
 }
 
 void CreateShaders()
@@ -96,8 +105,9 @@ int main()
 
 	brickTexture = Texture("Textures/brick.png");
 	brickTexture.LoadTexture();
-	dirtTexture = Texture("Textures/brick.png");
+	dirtTexture = Texture("Textures/dirt.png");
 	dirtTexture.LoadTexture();
+
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0;
 
@@ -169,7 +179,8 @@ int main()
 
 		//// translate(OBJECT, OFFSET)
 		//// rotate(OBJECT, ROTATION (in Rad), AXIS(x, y, z))
-		//// sacle(OBJECT, vec3)
+		//// scale(OBJECT, vec3)
+
 		model = glm::translate(model, glm::vec3(triOffset, 0.0f, -2.5f));
 		//model = glm::rotate(model, currAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
@@ -177,16 +188,38 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
+		brickTexture.UseTexture();
 
 		meshList[0]->RenderMesh();
 
+		// MODEL 2
 		model = glm::mat4(1.0f);
 
 		model = glm::translate(model, glm::vec3(-triOffset, 1.0f, -2.5f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		dirtTexture.UseTexture();
 
 		meshList[1]->RenderMesh();
+
+
+		// MODEL 3
+		model = glm::mat4(1.0f);
+
+		model = glm::translate(model, glm::vec3(2.0f, 1.0f, -2.5f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+
+		meshList[2]->RenderMesh();
+		
+		// MODEL 4
+		model = glm::mat4(1.0f);
+
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, -2.5f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		brickTexture.UseTexture();
+		meshList[3]->RenderMesh();
 		
 
 		glUseProgram(0);

@@ -9,7 +9,7 @@ Texture::Texture()
 	fileLocation = "";
 }
 
-Texture::Texture(char *fileLoc)
+Texture::Texture(const char* fileLoc)
 {
 	textureID = 0;
 	width = 0;
@@ -36,8 +36,8 @@ void Texture::LoadTexture()
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // linear blends pixels
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // linear blends pixels
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // linear blends pixels - Nearest is more pixelated
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -63,7 +63,7 @@ void Texture::ClearTexture()
 	width = 0;
 	height = 0;
 	bitDepth = 0;
-	fileLocation = "";
+	//fileLocation = "";
 }
 
 Texture::~Texture()
