@@ -1,6 +1,7 @@
-C:\Projects\OpenGL\Camera.cpp;C:\Projects\OpenGL\OpenGLApp\Debug\Camera.obj
-C:\Projects\OpenGL\Mesh.cpp;C:\Projects\OpenGL\OpenGLApp\Debug\Mesh.obj
-C:\Projects\OpenGL\OpenGLApp.cpp;C:\Projects\OpenGL\OpenGLApp\Debug\OpenGLApp.obj
-C:\Projects\OpenGL\Shader.cpp;C:\Projects\OpenGL\OpenGLApp\Debug\Shader.obj
-C:\Projects\OpenGL\Texture.cpp;C:\Projects\OpenGL\OpenGLApp\Debug\Texture.obj
-C:\Projects\OpenGL\Window.cpp;C:\Projects\OpenGL\OpenGLApp\Debug\Window.obj
+C:\Workspace\OpenGL\Camera.cpp;C:\Workspace\OpenGL\OpenGLApp\Debug\Camera.obj
+C:\Workspace\OpenGL\Light.cpp;C:\Workspace\OpenGL\OpenGLApp\Debug\Light.obj
+C:\Workspace\OpenGL\Mesh.cpp;C:\Workspace\OpenGL\OpenGLApp\Debug\Mesh.obj
+C:\Workspace\OpenGL\OpenGLApp.cpp;C:\Workspace\OpenGL\OpenGLApp\Debug\OpenGLApp.obj
+C:\Workspace\OpenGL\Shader.cpp;C:\Workspace\OpenGL\OpenGLApp\Debug\Shader.obj
+C:\Workspace\OpenGL\Texture.cpp;C:\Workspace\OpenGL\OpenGLApp\Debug\Texture.obj
+C:\Workspace\OpenGL\Window.cpp;C:\Workspace\OpenGL\OpenGLApp\Debug\Window.obj

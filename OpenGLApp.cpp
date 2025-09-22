@@ -17,6 +17,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Texture.h"
+#include "Light.h"
 
 const float toRadians = 3.14159265f / 180.0f;
 
@@ -28,18 +29,24 @@ Camera camera;
 Texture brickTexture;
 Texture dirtTexture;
 
+Light mainLight;
+
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
 
+// movement testing variables
 bool direction = true;
 float triOffset = 0.0f;
 float triMaxOffset = 0.7f;
-float triIncrement = 0.01f;
+float triIncrement = 0.001f;
+
+// rotation testing variables
 float currAngle = 0.0f;
 
+// Size testing variables
 bool sizeDirection = true;
 float curSize = 0.4f;
-float maxSize = 0.8f;
+float maxSize = 0.6f;
 float minSize = 0.1f;
 
 // Vertex Shader
@@ -49,6 +56,38 @@ static const char* vShader = "Shaders/shader.vert";
 // Fragment shader
 static const char* fShader = "Shaders/shader.frag";
 static const char* fShaderRb = "Shaders/shaderSpectrum.frag";
+
+void calcAverageNormals(unsigned int* indices, unsigned int indiceCount, GLfloat* vertices, unsigned int verticeCount,
+	unsigned int vLength, unsigned int normalOffset)
+{
+	// iterate trough each triangle
+	for (size_t i = 0; i < indiceCount; i += 3)
+	{
+		// assign variables of each vertice
+		unsigned int in0 = indices[i] * vLength;
+		unsigned int in1 = indices[i + 1] * vLength;
+		unsigned int in2 = indices[i + 2] * vLength;
+		glm::vec3 v1(vertices[in1] - vertices[in0], vertices[in1 + 1] - vertices[in0 + 1], vertices[in1 + 2] - vertices[in0 + 2]);
+		glm::vec3 v2(vertices[in2] - vertices[in0], vertices[in2 + 1] - vertices[in0 + 1], vertices[in2 + 2] - vertices[in0 + 2]);
+		glm::vec3 normal = glm::cross(v1, v2);
+		normal = glm::normalize(normal);
+
+		in0 += normalOffset; in1 += normalOffset; in2 += normalOffset; // skips to normals in vertices
+
+		// assign calculated normals into vertices
+		vertices[in0] += normal.x; vertices[in0 + 1] += normal.y; vertices[in0 + 2] += normal.z;
+		vertices[in1] += normal.x; vertices[in1 + 1] += normal.y; vertices[in1 + 2] += normal.z;
+		vertices[in2] += normal.x; vertices[in2 + 1] += normal.y; vertices[in2 + 2] += normal.z;
+	}
+
+	for (size_t i = 0; i < verticeCount / vLength; i++)
+	{
+		unsigned int nOffset = i * vLength + normalOffset;
+		glm::vec3 vec(vertices[nOffset], vertices[nOffset + 1], vertices[nOffset + 2]);
+		vec = glm::normalize(vec);
+		vertices[nOffset] = vec.x; vertices[nOffset + 1] = vec.y; vertices[nOffset + 2] = vec.z;
+	}
+}
 
 void CreateObjects()
 {
@@ -62,26 +101,29 @@ void CreateObjects()
 
 	GLfloat vertices[] =
 	{
-		//X     Y     Z        U     V
-		-1.0f, -1.0f, 0.0f,	  0.0f, 0.0f,
-		0.0f, -1.0f, 1.0f,    0.5f, 0.0f,
-		1.0f, -1.0f, 0.0f,    1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,     0.5f, 1.0f
+		//X     Y     Z        U     V			nx	  ny	nz
+		-1.0f, -1.0f, 0.0f,	  0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+		0.0f, -1.0f, 1.0f,    0.5f, 0.0f,		0.0f, 0.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,    1.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,     0.5f, 1.0f,		0.0f, 0.0f, 0.0f
 	};
+
+	calcAverageNormals(indices, 12, vertices, 32, 8, 5);
+
 	Mesh *obj1 = new Mesh();
-	obj1->CreateMesh(vertices, indices, 20, 12);
+	obj1->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(obj1);
 
 	Mesh *obj2 = new Mesh();
-	obj2->CreateMesh(vertices, indices, 20, 12);
+	obj2->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(obj2);
 	
 	Mesh *obj3 = new Mesh();
-	obj3->CreateMesh(vertices, indices, 20, 12);
+	obj3->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(obj3);
 	
 	Mesh *obj4 = new Mesh();
-	obj4->CreateMesh(vertices, indices, 20, 12);
+	obj4->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(obj4);
 }
 
@@ -103,13 +145,20 @@ int main()
 	// init camera
 	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 3.0f, 0.05f);
 
+	// load textures
 	brickTexture = Texture("Textures/brick.png");
 	brickTexture.LoadTexture();
 	dirtTexture = Texture("Textures/dirt.png");
 	dirtTexture.LoadTexture();
+	
+	// load lighting
+	mainLight = Light(1.0f, 1.0f, 1.0f, 0.2f, // ambient lighting
+					2.0f, 1.0f, 2.0f, 1.0f); // direction and diffuse
 
 
-	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0;
+	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0,
+		uniformAmbientColor = 0, uniformAmbientIntensity = 0, //ambient
+		uniformDirection = 0, uniformDiffuseIntensityLocation = 0; // diffuse
 
 	// setup projection
 	glm::mat4 projection = glm::perspective(45.0f, mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
@@ -127,6 +176,13 @@ int main()
 		camera.KeyControl(mainWindow.getsKeys(), deltaTime);
 		camera.MouseControl(mainWindow.getXChange(), mainWindow.getYChange());
 
+
+
+		// *********** MODEL MOVEMENT ************* // 
+		// **************************************** //
+		// **************************************** //
+
+		// TRANSLATION
 		if (direction)
 		{
 			triOffset += triIncrement;
@@ -141,27 +197,30 @@ int main()
 			direction = !direction;
 		}
 
-		// Rotation variable
+		// ROTATION
 		currAngle += 0.5f;
 		if (currAngle >= 360)
 		{
 			currAngle = 0.0f;
 		}
 
+		// SCALE
 		if (sizeDirection)
 		{
-			curSize += 0.01f;
+			curSize += 0.001f;
 		}
 		else
 		{
-			curSize -= 0.01f;
+			curSize -= 0.001f;
 		}
 
 		if (curSize >= maxSize || curSize <= minSize)
 		{
 			sizeDirection = !sizeDirection;
 		}
-
+		// **************************************** //
+		// **************************************** //
+		// **************************************** //
 
 
 		// Clear window
@@ -170,63 +229,60 @@ int main()
 
 		// assigns shader
 		shaderList[0].UseShader();
+
+		// assign uniforms
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
 		uniformView = shaderList[0].GetViewLocation();
+		uniformAmbientColor = shaderList[0].GetAmbientColorLocation();
+		uniformAmbientIntensity = shaderList[0].GetAmbientIntensityLocation();
+		uniformDirection = shaderList[0].GetDirectionLocation();
+		uniformDiffuseIntensityLocation = shaderList[0].GetDiffuseIntensityLocation();
 
-		// Mat4 = Matrix 4x4
-		glm::mat4 model(1.0f);
+		// Sets lighting
+		mainLight.UseLight(uniformAmbientIntensity, uniformAmbientColor, uniformDiffuseIntensityLocation, uniformDirection);
 
 		//// translate(OBJECT, OFFSET)
 		//// rotate(OBJECT, ROTATION (in Rad), AXIS(x, y, z))
 		//// scale(OBJECT, vec3)
 
-		model = glm::translate(model, glm::vec3(triOffset, 0.0f, -2.5f));
-		//model = glm::rotate(model, currAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 model(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f));
+		model = glm::rotate(model, currAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
-
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		brickTexture.UseTexture();
-
 		meshList[0]->RenderMesh();
 
 		// MODEL 2
 		model = glm::mat4(1.0f);
-
 		model = glm::translate(model, glm::vec3(-triOffset, 1.0f, -2.5f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f)); 
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		dirtTexture.UseTexture();
-
 		meshList[1]->RenderMesh();
-
 
 		// MODEL 3
 		model = glm::mat4(1.0f);
-
 		model = glm::translate(model, glm::vec3(2.0f, 1.0f, -2.5f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
+		model = glm::scale(model, glm::vec3(curSize, curSize, curSize * 2));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-
 		meshList[2]->RenderMesh();
-		
+
 		// MODEL 4
 		model = glm::mat4(1.0f);
-
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, -2.5f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		brickTexture.UseTexture();
 		meshList[3]->RenderMesh();
-		
 
 		glUseProgram(0);
 
 		// Swap drawn and drawing buffers
 		mainWindow.swapBuffers();
 	}
-
 	return 0;
 }
