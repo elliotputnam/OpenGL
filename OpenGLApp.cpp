@@ -12,6 +12,8 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtc\type_ptr.hpp>
 
+#include "CommonValues.h"
+
 #include "Window.h"
 #include "Mesh.h"
 #include "Shader.h"
@@ -19,6 +21,8 @@
 #include "Texture.h"
 #include "Light.h"
 #include "Material.h"
+#include "DirectionalLight.h"
+#include "PointLight.h"
 
 const float toRadians = 3.14159265f / 180.0f;
 
@@ -33,7 +37,8 @@ Texture dirtTexture;
 Material shinyMaterial;
 Material dullMaterial;
 
-Light mainLight;
+DirectionalLight mainLight;
+PointLight pointLights[MAX_POINT_LIGHTS];
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
@@ -160,13 +165,25 @@ int main()
 	dullMaterial = Material(0.3f, 4);
 	
 	// load lighting
-	mainLight = Light(1.0f, 1.0f, 1.0f, 0.2f, // ambient lighting
-					2.0f, 1.0f, 2.0f, 1.0f); // direction and diffuse
+	mainLight = DirectionalLight
+	(
+		1.0f, 1.0f, 1.0f,	// R G B
+		0.2f, 1.0f,			// ambient + diffuse intensity
+		2.0f, 1.0f, 2.0f	// direction
+	); 
 
+	unsigned int pointLightCount = 0;
 
+	pointLights[0] = PointLight
+	(
+		0.0f, 1.0f, 0.0f,	// R G B
+		0.0f, 1.0f,			// ambient + diffuse intensity
+		-4.0f, 2.0f, 0.0f,	// direction
+		0.3f, 0.1f, 0.1f
+	);
+	pointLightCount++;
+	
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
-		uniformAmbientColor = 0, uniformAmbientIntensity = 0, //ambient
-		uniformDirection = 0, uniformDiffuseIntensityLocation = 0,// diffuse
 		uniformSpecularIntensity = 0, uniformShininess = 0; 
 
 	// setup projection
@@ -243,16 +260,16 @@ int main()
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
 		uniformView = shaderList[0].GetViewLocation();
-		uniformAmbientColor = shaderList[0].GetAmbientColorLocation();
-		uniformAmbientIntensity = shaderList[0].GetAmbientIntensityLocation();
-		uniformDirection = shaderList[0].GetDirectionLocation();
-		uniformDiffuseIntensityLocation = shaderList[0].GetDiffuseIntensityLocation();
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
 		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 
+		// sets lighting
+		shaderList[0].SetDirectionalLight(&mainLight);
+		shaderList[0].SetPointLights(pointLights, pointLightCount);
+
 		// Sets lighting
-		mainLight.UseLight(uniformAmbientIntensity, uniformAmbientColor, uniformDiffuseIntensityLocation, uniformDirection);
+		// mainLight.UseLight(uniformAmbientIntensity, uniformAmbientColor, uniformDiffuseIntensityLocation, uniformDirection);
 
 		//// translate(OBJECT, OFFSET)
 		//// rotate(OBJECT, ROTATION (in Rad), AXIS(x, y, z))
