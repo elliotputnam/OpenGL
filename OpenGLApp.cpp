@@ -23,6 +23,7 @@
 #include "Material.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
+#include "SpotLight.h"
 
 const float toRadians = 3.14159265f / 180.0f;
 
@@ -31,15 +32,21 @@ std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
 Camera camera;
 
+// TEXTURES
 Texture brickTexture;
 Texture dirtTexture;
+Texture plainTexture;
 
+// MATERIALS
 Material shinyMaterial;
 Material dullMaterial;
 
+// LIGHTS
 DirectionalLight mainLight;
 PointLight pointLights[MAX_POINT_LIGHTS];
+SpotLight spotLights[MAX_SPOT_LIGHTS];
 
+// TIMING
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
 
@@ -208,6 +215,8 @@ int main()
 	brickTexture.LoadTexture();
 	dirtTexture = Texture("Textures/dirt.png");
 	dirtTexture.LoadTexture();
+	plainTexture = Texture("Textures/plain.png");
+	plainTexture.LoadTexture();
 
 	// Specular lighting
 	shinyMaterial = Material(1.0f, 32);
@@ -217,31 +226,54 @@ int main()
 	mainLight = DirectionalLight
 	(
 		1.0f, 1.0f, 1.0f,	// R G B
-		0.2f, 0.2f,			// ambient + diffuse intensity
+		0.1f, 0.1f,			// ambient + diffuse intensity
 		0.0f, 0.0f, 0.0f	// direction
 	); 
 
 	unsigned int pointLightCount = 0;
-	pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,
-								0.0f, 1.0f,
-								-4.0f, 0.0f, 4.0f,
-								0.3f, 0.2f, 0.1f);
+	pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,	// R G B
+								0.0f, 0.5f,			// ambient + diffuse intensity
+								-3.5f, 0.0f, 3.5f,	// position
+								0.3f, 0.2f, 0.1f);	// constant, linear, exponent
 	pointLightCount++;
 	pointLights[1] = PointLight(0.0f, 1.0f, 0.0f,
-								0.0f, 1.0f,
-								4.0f, 0.0f, 4.0f,
+								0.0f, 0.5f,
+								3.5f, 0.0f, 3.5f,
 								0.3f, 0.1f, 0.1f);
 	pointLightCount++;
 	pointLights[2] = PointLight(1.0f, 0.0f, 0.0f,
-								0.0f, 1.0f,
-								-4.0f, 0.0f, -4.0f,
+								0.0f, 0.5f,
+								-3.5f, 0.0f, -3.5f,
 								0.3f, 0.1f, 0.1f);
 	pointLightCount++;
 	pointLights[3] = PointLight(1.0f, 1.0f, 1.0f,
-								0.0f, 1.0f,
-								4.0f, 0.0f, -4.0f,
+								0.0f, 0.5f,
+								3.5f, 0.0f, -3.5f,
 								0.3f, 0.1f, 0.1f);
 	pointLightCount++;
+	
+	unsigned int spotLightCount = 0;
+	spotLights[0] = SpotLight
+	(
+		1.0f, 1.0f, 1.0f,		// R G B
+		0.0f, 2.0f,				// ambient + diffuse intensity
+		0.0f, 0.0f, 0.0f,		// position
+		0.0f, -1.0f, 0.0f,		// direction
+	   	1.0f, 0.01f, 0.01f,		// constant, linear, exponent
+		20.0f					// edge (angle)
+	);			  
+	spotLightCount++;
+
+	spotLights[1] = SpotLight
+	(
+		1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f, 0.0f,
+		-100.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		20.0f
+	);
+	spotLightCount++;
 	
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0; 
@@ -324,13 +356,20 @@ int main()
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
 
-		// sets lighting
+		glm::vec3 flashlightLocation = camera.getCameraPosition();
+		flashlightLocation.y -= 0.3f;
+		spotLights[0].SetFlash(flashlightLocation, camera.getCameraDirection());
+
+		// Assign lighting to shader
 		shaderList[0].SetDirectionalLight(&mainLight);
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
+		shaderList[0].SetSpotLights(spotLights, spotLightCount);
 
-		//// translate(OBJECT, OFFSET)
-		//// rotate(OBJECT, ROTATION (in Rad), AXIS(x, y, z))
-		//// scale(OBJECT, vec3)
+
+		// **** ORDER OF OPERATIONS ***** //
+		// translate(OBJECT, OFFSET)
+		// rotate(OBJECT, ROTATION (in Rad), AXIS(x, y, z))
+		// scale(OBJECT, vec3)
 
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
