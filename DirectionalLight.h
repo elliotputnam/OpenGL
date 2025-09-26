@@ -2,26 +2,20 @@
 #include "Light.h"
 
 class DirectionalLight :
-    public Light
+	public Light
 {
 public:
-    DirectionalLight();
+	DirectionalLight();
+	DirectionalLight(GLfloat red, GLfloat green, GLfloat blue,
+		GLfloat aIntensity, GLfloat dIntensity,
+		GLfloat xDir, GLfloat yDir, GLfloat zDir);
 
-    DirectionalLight
-    (
-        GLfloat red, GLfloat green, GLfloat blue,
-        GLfloat aIntensity, GLfloat dIntensity,
-        GLfloat xDir, GLfloat yDir, GLfloat zDir
-    );
+	void UseLight(GLfloat ambientIntensityLocation, GLfloat ambientcolorLocation,
+		GLfloat diffuseIntensityLocation, GLfloat directionLocation);
 
-    void UseLight
-    (
-        GLfloat ambientIntensityLocation, GLfloat ambientColorLocation,
-        GLfloat diffuseIntensityLocation, GLfloat directionLocation
-    );
+	~DirectionalLight();
 
-    ~DirectionalLight();
 private:
-
-    glm::vec3 direction;
+	glm::vec3 direction;
 };
+

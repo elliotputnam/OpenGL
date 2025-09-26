@@ -94,9 +94,8 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
 
 	for (size_t i = 0; i < MAX_POINT_LIGHTS; i++)
 	{
-		// null terminator
 		char locBuff[100] = { '\0' };
-		// print to the buffer
+
 		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].base.color", i);
 		uniformPointLight[i].uniformColor = glGetUniformLocation(shaderID, locBuff);
 
@@ -106,17 +105,17 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
 		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].base.diffuseIntensity", i);
 		uniformPointLight[i].uniformDiffuseIntensity = glGetUniformLocation(shaderID, locBuff);
 
-		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].base.constant", i);
+		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].position", i);
+		uniformPointLight[i].uniformPosition = glGetUniformLocation(shaderID, locBuff);
+
+		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].constant", i);
 		uniformPointLight[i].uniformConstant = glGetUniformLocation(shaderID, locBuff);
 
-		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].base.linear", i);
+		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].linear", i);
 		uniformPointLight[i].uniformLinear = glGetUniformLocation(shaderID, locBuff);
 
-		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].base.exponent", i);
+		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].exponent", i);
 		uniformPointLight[i].uniformExponent = glGetUniformLocation(shaderID, locBuff);
-
-		snprintf(locBuff, sizeof(locBuff), "pointLights[%d].base.position", i);
-		uniformPointLight[i].uniformPosition = glGetUniformLocation(shaderID, locBuff);
 	}
 }
 
@@ -132,70 +131,52 @@ GLuint Shader::GetViewLocation()
 {
 	return uniformView;
 }
-GLuint Shader::GetAmbientIntensityLocation()
-{
-	return uniformDirectionalLight.uniformAmbientIntensity;
-}
-
 GLuint Shader::GetAmbientColorLocation()
 {
 	return uniformDirectionalLight.uniformColor;
 }
-
+GLuint Shader::GetAmbientIntensityLocation()
+{
+	return uniformDirectionalLight.uniformAmbientIntensity;
+}
 GLuint Shader::GetDiffuseIntensityLocation()
 {
 	return uniformDirectionalLight.uniformDiffuseIntensity;
 }
-
 GLuint Shader::GetDirectionLocation()
 {
 	return uniformDirectionalLight.uniformDirection;
 }
-
 GLuint Shader::GetSpecularIntensityLocation()
 {
 	return uniformSpecularIntensity;
 }
-
 GLuint Shader::GetShininessLocation()
 {
 	return uniformShininess;
 }
-
 GLuint Shader::GetEyePositionLocation()
 {
 	return uniformEyePosition;
 }
 
-void Shader::SetDirectionalLight(DirectionalLight* dirLight)
+void Shader::SetDirectionalLight(DirectionalLight* dLight)
 {
-	dirLight->UseLight
-	(
-		uniformDirectionalLight.uniformAmbientIntensity,
-		uniformDirectionalLight.uniformColor,
-		uniformDirectionalLight.uniformDiffuseIntensity,
-		uniformDirectionalLight.uniformDirection
-	);
+	dLight->UseLight(uniformDirectionalLight.uniformAmbientIntensity, uniformDirectionalLight.uniformColor,
+		uniformDirectionalLight.uniformDiffuseIntensity, uniformDirectionalLight.uniformDirection);
 }
 
-void Shader::SetPointLights(PointLight* pntLight, unsigned int lightCount)
+void Shader::SetPointLights(PointLight* pLight, unsigned int lightCount)
 {
-	if (lightCount > MAX_POINT_LIGHTS) { lightCount = MAX_POINT_LIGHTS; }
+	if (lightCount > MAX_POINT_LIGHTS) lightCount = MAX_POINT_LIGHTS;
 
 	glUniform1i(uniformPointLightCount, lightCount);
 
 	for (size_t i = 0; i < lightCount; i++)
 	{
-		pntLight[i].UseLight
-		(
-			uniformPointLight[i].uniformAmbientIntensity,
-			uniformPointLight[i].uniformColor,
-			uniformPointLight[i].uniformDiffuseIntensity,
-			uniformPointLight[i].uniformPosition,
-			uniformPointLight[i].uniformConstant,
-			uniformPointLight[i].uniformLinear,
-			uniformPointLight[i].uniformExponent
-		);
+		pLight[i].UseLight(uniformPointLight[i].uniformAmbientIntensity, uniformPointLight[i].uniformColor,
+			uniformPointLight[i].uniformDiffuseIntensity, uniformPointLight[i].uniformPosition,
+			uniformPointLight[i].uniformConstant, uniformPointLight[i].uniformLinear, uniformPointLight[i].uniformExponent);
 	}
 }
 

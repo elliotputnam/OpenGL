@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "PointLight.h"
 
 Camera::Camera() {}
 

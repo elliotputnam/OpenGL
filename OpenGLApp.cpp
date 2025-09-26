@@ -46,7 +46,7 @@ GLfloat lastTime = 0.0f;
 // movement testing variables
 bool direction = true;
 float triOffset = 0.0f;
-float triMaxOffset = 0.7f;
+float triMaxOffset = 0.4f;
 float triIncrement = 0.001f;
 
 // rotation testing variables
@@ -54,9 +54,9 @@ float currAngle = 0.0f;
 
 // Size testing variables
 bool sizeDirection = true;
-float curSize = 0.4f;
-float maxSize = 0.6f;
-float minSize = 0.1f;
+float curSize = 0.3f;
+float maxSize = 0.4f;
+float minSize = 0.2f;
 
 // Vertex Shader
 // clamp() keeps input values within specified range (0 - 1), removing negatives in position.
@@ -64,7 +64,6 @@ static const char* vShader = "Shaders/shader.vert";
 
 // Fragment shader
 static const char* fShader = "Shaders/shader.frag";
-static const char* fShaderRb = "Shaders/shaderSpectrum.frag";
 
 void calcAverageNormals(unsigned int* indices, unsigned int indiceCount, GLfloat* vertices, unsigned int verticeCount,
 	unsigned int vLength, unsigned int normalOffset)
@@ -110,30 +109,80 @@ void CreateObjects()
 
 	GLfloat vertices[] =
 	{
-		//X     Y     Z        U     V			nx	  ny	nz
-		-1.0f, -1.0f, -0.5f,	  0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
-		0.0f, -1.0f, 1.0f,    0.5f, 0.0f,		0.0f, 0.0f, 0.0f,
-		1.0f, -1.0f, -0.5f,    1.0f, 0.0f,		0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,     0.5f, 1.0f,		0.0f, 0.0f, 0.0f
+		//X     Y     Z			U     V			nx	  ny	nz
+		-1.0f, -1.0f, -0.5f,	0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+		0.0f, -1.0f, 1.0f,		0.5f, 0.0f,		0.0f, 0.0f, 0.0f,
+		1.0f, -1.0f, -0.5f,		1.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,		0.5f, 1.0f,		0.0f, 0.0f, 0.0f
+	};
+
+	unsigned int floorIndices[] =
+	{
+		0, 2, 1,
+		1, 2, 3
+	};
+
+	GLfloat floorVertices[] =
+	{
+		//X     Y     Z			U     V			nx	  ny	nz
+		-10.f, 0.0f, -10.0f,	0.0f, 0.0f,		0.0f, -1.0f, 0.0f,
+		10.0f, 0.0f, -10.0f,	10.0f, 0.0f,	0.0f, -1.0f, 0.0f,
+		-10.0f, 0.0f, 10.0f,	0.0f, 10.0f,	0.0f, -1.0f, 0.0f,
+		10.0f, 0.0f, 10.0f,		10.0f, 10.0f,	0.0f, -1.0f, 0.0f
+	};
+
+	unsigned int wallIndices[] =
+	{
+		0, 2, 1,
+		1, 2, 3
+	};
+
+	GLfloat wallVertices[] =
+	{
+		//X     Y     Z			U     V			nx	  ny	nz
+		-10.0f, 0.0f, -10.0f,	0.0f, 0.0f,		0.0f, -1.0f, 0.0f,
+		10.0f, 0.0f, -10.0f,	10.0f, 0.0f,	0.0f, -1.0f, 0.0f,
+		-10.0f, 5.0f, -10.0f,	0.0f, 10.0f,	0.0f, -1.0f, 0.0f,
+		10.0f, 5.0f, -10.0f,	10.0f, 10.0f,	0.0f, -1.0f, 0.0f
 	};
 
 	calcAverageNormals(indices, 12, vertices, 32, 8, 5);
 
-	Mesh *obj1 = new Mesh();
-	obj1->CreateMesh(vertices, indices, 32, 12);
-	meshList.push_back(obj1);
+	Mesh *pyramidOne = new Mesh();
+	pyramidOne->CreateMesh(vertices, indices, 32, 12);
+	meshList.push_back(pyramidOne);
 
-	Mesh *obj2 = new Mesh();
-	obj2->CreateMesh(vertices, indices, 32, 12);
-	meshList.push_back(obj2);
+	Mesh *pyramidTwo = new Mesh();
+	pyramidTwo->CreateMesh(vertices, indices, 32, 12);
+	meshList.push_back(pyramidTwo);
 	
-	Mesh *obj3 = new Mesh();
-	obj3->CreateMesh(vertices, indices, 32, 12);
-	meshList.push_back(obj3);
+	Mesh *pyramidThree = new Mesh();
+	pyramidThree->CreateMesh(vertices, indices, 32, 12);
+	meshList.push_back(pyramidThree);
 	
-	Mesh *obj4 = new Mesh();
-	obj4->CreateMesh(vertices, indices, 32, 12);
-	meshList.push_back(obj4);
+	Mesh* pyramidFour = new Mesh();
+	pyramidFour->CreateMesh(vertices, indices, 32, 12);
+	meshList.push_back(pyramidFour);
+
+	Mesh* floor = new Mesh();
+	floor->CreateMesh(floorVertices, floorIndices, 32, 6);
+	meshList.push_back(floor);
+
+	Mesh* nWall = new Mesh();
+	nWall->CreateMesh(wallVertices, wallIndices, 32, 6);
+	meshList.push_back(nWall);
+
+	Mesh* wWall = new Mesh();
+	wWall->CreateMesh(wallVertices, wallIndices, 32, 6);
+	meshList.push_back(wWall);
+
+	Mesh* sWall = new Mesh();
+	sWall->CreateMesh(wallVertices, wallIndices, 32, 6);
+	meshList.push_back(sWall);
+
+	Mesh* eWall = new Mesh();
+	eWall->CreateMesh(wallVertices, wallIndices, 32, 6);
+	meshList.push_back(eWall);
 }
 
 void CreateShaders()
@@ -168,19 +217,30 @@ int main()
 	mainLight = DirectionalLight
 	(
 		1.0f, 1.0f, 1.0f,	// R G B
-		0.2f, 1.0f,			// ambient + diffuse intensity
-		2.0f, 1.0f, 2.0f	// direction
+		0.2f, 0.2f,			// ambient + diffuse intensity
+		0.0f, 0.0f, 0.0f	// direction
 	); 
 
 	unsigned int pointLightCount = 0;
-
-	pointLights[0] = PointLight
-	(
-		0.0f, 1.0f, 0.0f,	// R G B
-		0.0f, 1.0f,			// ambient + diffuse intensity
-		-4.0f, 2.0f, 0.0f,	// direction
-		0.3f, 0.1f, 0.1f
-	);
+	pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,
+								0.0f, 1.0f,
+								-4.0f, 0.0f, 4.0f,
+								0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+	pointLights[1] = PointLight(0.0f, 1.0f, 0.0f,
+								0.0f, 1.0f,
+								4.0f, 0.0f, 4.0f,
+								0.3f, 0.1f, 0.1f);
+	pointLightCount++;
+	pointLights[2] = PointLight(1.0f, 0.0f, 0.0f,
+								0.0f, 1.0f,
+								-4.0f, 0.0f, -4.0f,
+								0.3f, 0.1f, 0.1f);
+	pointLightCount++;
+	pointLights[3] = PointLight(1.0f, 1.0f, 1.0f,
+								0.0f, 1.0f,
+								4.0f, 0.0f, -4.0f,
+								0.3f, 0.1f, 0.1f);
 	pointLightCount++;
 	
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
@@ -260,16 +320,13 @@ int main()
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
 		uniformView = shaderList[0].GetViewLocation();
+		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
-		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 
 		// sets lighting
 		shaderList[0].SetDirectionalLight(&mainLight);
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
-
-		// Sets lighting
-		// mainLight.UseLight(uniformAmbientIntensity, uniformAmbientColor, uniformDiffuseIntensityLocation, uniformDirection);
 
 		//// translate(OBJECT, OFFSET)
 		//// rotate(OBJECT, ROTATION (in Rad), AXIS(x, y, z))
@@ -279,9 +336,9 @@ int main()
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		// MODEL 1
+		// MODEL 1 (rotating)
 		glm::mat4 model(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f));
+		model = glm::translate(model, glm::vec3(3.0f, 0.0f, -2.5f));
 		model = glm::rotate(model, currAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -289,30 +346,78 @@ int main()
 		shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[0]->RenderMesh();
 
-		// MODEL 2
+		// MODEL 2 (moving)
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-triOffset, 1.0f, -2.5f));
+		model = glm::translate(model, glm::vec3(-triOffset + 1.0f, 0.0f, -2.5f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		dirtTexture.UseTexture();
 		meshList[1]->RenderMesh();
 
-		// MODEL 3
+		// MODEL 3 (growing/shrinking)
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(2.0f, 1.0f, -2.5f));
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -2.5f));
 		model = glm::scale(model, glm::vec3(curSize, curSize, curSize));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		meshList[2]->RenderMesh();
 
-		// MODEL 4
+		// MODEL 4 (static)
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(2.0f, 0.0f, -2.5f));
+		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, -2.5f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		brickTexture.UseTexture();
 		meshList[3]->RenderMesh();
+		
+		// Floor
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		dirtTexture.UseTexture();
+		meshList[4]->RenderMesh();
+
+		// North Wall
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		brickTexture.UseTexture();
+		meshList[5]->RenderMesh();
+		
+		// West Wall
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		brickTexture.UseTexture();
+		meshList[6]->RenderMesh();
+
+		// South Wall
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		brickTexture.UseTexture();
+		meshList[7]->RenderMesh();
+
+		// East Wall
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		brickTexture.UseTexture();
+		meshList[8]->RenderMesh();
 
 		glUseProgram(0);
 

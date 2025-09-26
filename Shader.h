@@ -34,7 +34,7 @@ public:
 	GLuint GetEyePositionLocation();
 
 	void SetDirectionalLight(DirectionalLight* dirLight);
-	void SetPointLights(PointLight* pntLight, unsigned int lightCount);
+	void SetPointLights(PointLight * pLight, unsigned int lightCount);
 
 	void UseShader();
 	void ClearShader();
@@ -73,4 +73,3 @@ private:
 	void CompileShader(const char* vertextCode, const char* fragmentCode);
 	void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
 };
-
