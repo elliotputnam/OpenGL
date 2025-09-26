@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "PointLight.h"
 
 Camera::Camera() {}
 
@@ -51,6 +52,11 @@ void Camera::MouseControl(GLfloat xChange, GLfloat yChange)
 glm::vec3 Camera::getCameraPosition()
 {
 	return position;
+}
+
+glm::vec3 Camera::getCameraDirection()
+{
+	return glm::normalize(front);
 }
 
 glm::mat4 Camera::calculateViewMatrix()
