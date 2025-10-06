@@ -1,0 +1,44 @@
+﻿  Camera.cpp
+  DirectionalLight.cpp
+C:\Projects\OpenGL\DirectionalLight.cpp(18,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\Projects\OpenGL\DirectionalLight.cpp(19,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\Projects\OpenGL\DirectionalLight.cpp(21,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+C:\Projects\OpenGL\DirectionalLight.cpp(22,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
+  Light.cpp
+  Material.cpp
+  Mesh.cpp
+  OpenGLApp.cpp
+C:\Projects\OpenGL\Window.h(16,35): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+  (compiling source file 'OpenGLApp.cpp')
+  
+C:\Projects\OpenGL\Window.h(17,36): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+  (compiling source file 'OpenGLApp.cpp')
+  
+C:\Projects\OpenGL\OpenGLApp.cpp(287,15): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+  PointLight.cpp
+  Shader.cpp
+C:\Projects\OpenGL\Shader.cpp(201,75): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
+C:\Projects\OpenGL\Shader.cpp(201,26): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
+C:\Projects\OpenGL\Shader.cpp(200,91): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
+C:\Projects\OpenGL\Shader.cpp(200,42): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
+  SpotLight.cpp
+  Texture.cpp
+  Window.cpp
+C:\Projects\OpenGL\Window.h(16,35): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+  (compiling source file 'Window.cpp')
+  
+C:\Projects\OpenGL\Window.h(17,36): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+  (compiling source file 'Window.cpp')
+  
+C:\Projects\OpenGL\Window.cpp(143,22): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Projects\OpenGL\Window.cpp(144,22): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Projects\OpenGL\Window.cpp(148,28): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Projects\OpenGL\Window.cpp(149,40): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Projects\OpenGL\Window.cpp(152,21): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Projects\OpenGL\Window.cpp(153,21): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+C:\Projects\OpenGL\Window.cpp(91): warning C4715: 'Window::Initialize': not all control paths return a value
+  All 593 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  OpenGLApp.vcxproj -> C:\Projects\OpenGL\Release\OpenGLApp.exe
