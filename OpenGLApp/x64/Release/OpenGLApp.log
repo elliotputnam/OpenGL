@@ -1,110 +1,16 @@
-﻿  Camera.cpp
-  DirectionalLight.cpp
-C:\Projects\OpenGL\DirectionalLight.cpp(18,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-C:\Projects\OpenGL\DirectionalLight.cpp(19,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-C:\Projects\OpenGL\DirectionalLight.cpp(21,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-C:\Projects\OpenGL\DirectionalLight.cpp(22,14): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-  Light.cpp
-  Material.cpp
-  Mesh.cpp
-  OpenGLApp.cpp
-C:\Projects\OpenGL\Window.h(16,35): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+﻿  OpenGLApp.cpp
+C:\Workspace\OpenGL\Window.h(16,35): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
   (compiling source file 'OpenGLApp.cpp')
   
-C:\Projects\OpenGL\Window.h(17,36): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+C:\Workspace\OpenGL\Window.h(17,36): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
   (compiling source file 'OpenGLApp.cpp')
   
-C:\Projects\OpenGL\OpenGLApp.cpp(100,24): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Projects\OpenGL\OpenGLApp.cpp(287,15): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-  PointLight.cpp
-  Shader.cpp
-C:\Projects\OpenGL\Shader.cpp(100,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(100,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(103,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(103,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(106,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(106,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(109,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(109,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(112,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(112,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(115,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(115,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(118,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(118,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(128,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(128,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(131,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(131,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(134,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(134,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(137,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(137,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(140,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(140,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(143,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(143,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(146,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(146,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(149,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(149,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(152,38): warning C4477: 'snprintf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-      C:\Projects\OpenGL\Shader.cpp(152,38):
-      consider using '%zd' in the format string
-  
-C:\Projects\OpenGL\Shader.cpp(201,75): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
-C:\Projects\OpenGL\Shader.cpp(201,26): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
-C:\Projects\OpenGL\Shader.cpp(200,91): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
-C:\Projects\OpenGL\Shader.cpp(200,42): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
-C:\Projects\OpenGL\Shader.cpp(259,24): warning C4267: '=': conversion from 'size_t' to 'GLint', possible loss of data
-  SpotLight.cpp
+C:\Workspace\OpenGL\OpenGLApp.cpp(104,24): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Workspace\OpenGL\OpenGLApp.cpp(293,15): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
   Texture.cpp
-  Window.cpp
-C:\Projects\OpenGL\Window.h(16,35): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
-  (compiling source file 'Window.cpp')
-  
-C:\Projects\OpenGL\Window.h(17,36): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
-  (compiling source file 'Window.cpp')
-  
-C:\Projects\OpenGL\Window.cpp(143,22): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Projects\OpenGL\Window.cpp(144,22): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Projects\OpenGL\Window.cpp(148,28): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Projects\OpenGL\Window.cpp(149,40): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Projects\OpenGL\Window.cpp(152,21): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Projects\OpenGL\Window.cpp(153,21): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
   Generating code
-  Previous IPDB not found, fall back to full compilation.
-C:\Projects\OpenGL\Window.cpp(91): warning C4715: 'Window::Initialize': not all control paths return a value
-  All 588 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  2 of 595 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    11 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  OpenGLApp.vcxproj -> C:\Projects\OpenGL\x64\Release\OpenGLApp.exe
+  OpenGLApp.vcxproj -> C:\Workspace\OpenGL\x64\Release\OpenGLApp.exe

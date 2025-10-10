@@ -25,6 +25,10 @@
 #include "PointLight.h"
 #include "SpotLight.h"
 
+#include "assimp/Importer.hpp"
+#include <assimp/BaseImporter.h>
+#include <assimp/Importer.hpp>
+
 const float toRadians = 3.14159265f / 180.0f;
 
 Window mainWindow;
@@ -212,11 +216,11 @@ int main()
 
 	// load textures
 	brickTexture = Texture("Textures/brick.png");
-	brickTexture.LoadTexture();
+	brickTexture.LoadTextureA();
 	dirtTexture = Texture("Textures/dirt.png");
-	dirtTexture.LoadTexture();
+	dirtTexture.LoadTextureA();
 	plainTexture = Texture("Textures/plain.png");
-	plainTexture.LoadTexture();
+	plainTexture.LoadTextureA();
 
 	// Specular lighting
 	shinyMaterial = Material(1.0f, 32);
@@ -280,6 +284,8 @@ int main()
 
 	// setup projection
 	glm::mat4 projection = glm::perspective(45.0f, mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
+
+	Assimp::Importer importer;
 
 	// loop until window closes
 	while (!mainWindow.getWindowShouldClose())

@@ -18,7 +18,7 @@ Texture::Texture(const char* fileLoc)
 	fileLocation = fileLoc;
 }
 
-void Texture::LoadTexture()
+bool Texture::LoadTexture()
 {
 	// Load image data
 	unsigned char* texData = stbi_load(fileLocation, &width, &height, &bitDepth, 0);
@@ -27,7 +27,38 @@ void Texture::LoadTexture()
 	if (!texData)
 	{
 		printf("Failed to find: %s\n", fileLocation);
-		return;
+		return false;
+	}
+
+	// Generating texture, applying ID to it
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // linear blends pixels - Nearest is more pixelated
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, texData);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	// unbind texture
+	glBindTexture(GL_TEXTURE_2D, 0);
+	// frees up texData since it's not needed
+	stbi_image_free(texData);
+
+	return true;
+}
+bool Texture::LoadTextureA()
+{
+	// Load image data
+	unsigned char* texData = stbi_load(fileLocation, &width, &height, &bitDepth, 0);
+
+	// Check it
+	if (!texData)
+	{
+		printf("Failed to find: %s\n", fileLocation);
+		return false;
 	}
 
 	// Generating texture, applying ID to it
@@ -46,6 +77,8 @@ void Texture::LoadTexture()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	// frees up texData since it's not needed
 	stbi_image_free(texData);
+
+	return true;
 }
 
 void Texture::UseTexture()
