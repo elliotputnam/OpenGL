@@ -74,6 +74,7 @@ float curSize = 0.3f;
 float maxSize = 0.4f;
 float minSize = 0.2f;
 
+
 // Vertex Shader
 // clamp() keeps input values within specified range (0 - 1), removing negatives in position.
 static const char* vShader = "Shaders/shader.vert";
@@ -295,6 +296,9 @@ int main()
 
 	Assimp::Importer importer;
 
+	glm::vec3 helicopterPos(0.0f, 0.0f, 0.0f);
+	glm::vec3 helicopterRot(0.0f, 0.0f, 0.0f);
+
 	// loop until window closes
 	while (!mainWindow.getWindowShouldClose())
 	{
@@ -350,6 +354,30 @@ int main()
 		{
 			sizeDirection = !sizeDirection;
 		}
+		
+
+		// HELI ROTATION and MOVEMENT
+		bool* keys = mainWindow.getsKeys();
+		
+
+		if (keys[GLFW_KEY_UP]) 
+		{
+			helicopterPos.y += 0.01f;
+		}
+		if (keys[GLFW_KEY_DOWN])
+		{
+			helicopterPos.y -= 0.01f;
+		}
+		if (keys[GLFW_KEY_LEFT])
+		{
+			helicopterRot.x += 1.0f;
+		}
+		if (keys[GLFW_KEY_RIGHT])
+		{
+			helicopterRot.x -= 1.0f;
+		}
+
+
 		// **************************************** //
 		// **************************************** //
 		// **************************************** //
@@ -373,6 +401,11 @@ int main()
 		glm::vec3 flashlightLocation = camera.getCameraPosition();
 		flashlightLocation.y -= 0.3f;
 		spotLights[0].SetFlash(flashlightLocation, camera.getCameraDirection());
+
+		if (camera.getCameraPosition().y < -2.0f)
+		{
+			printf("below -2");
+		}
 
 		// Assign lighting to shader
 		shaderList[0].SetDirectionalLight(&mainLight);
@@ -472,9 +505,10 @@ int main()
 		brickTexture.UseTexture();
 		meshList[8]->RenderMesh();
 
-
+		// Helicopter Model
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, helicopterPos.y, 0.0f));
+		model = glm::rotate(model, helicopterRot.x * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
