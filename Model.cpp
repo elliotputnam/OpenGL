@@ -1,5 +1,11 @@
 #include "Model.h"
 
+
+Model::Model()
+{
+
+}
+
 void Model::LoadModel(const std::string& fileName)
 {
 
@@ -49,10 +55,6 @@ void Model::RenderModel()
 		}
 		meshList[i]->RenderMesh();
 	}
-}
-
-Model::~Model()
-{
 }
 
 void Model::LoadNode(aiNode* node, const aiScene* scene)
@@ -149,4 +151,9 @@ void Model::LoadMaterials(const aiScene* scene)
 			textureList[i]->LoadTextureA();
 		}
 	}
+
+}
+
+Model::~Model()
+{
 }
