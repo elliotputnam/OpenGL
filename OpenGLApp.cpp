@@ -34,9 +34,14 @@
 
 const float toRadians = 3.14159265f / 180.0f;
 
+GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
+uniformSpecularIntensity = 0, uniformShininess = 0;
+
 Window mainWindow;
 std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
+Shader directionalShadowShader;
+
 Camera camera;
 
 // TEXTURES
@@ -49,11 +54,15 @@ Material shinyMaterial;
 Material dullMaterial;
 
 Model heli;
+Model penguin;
 
 // LIGHTS
 DirectionalLight mainLight;
 PointLight pointLights[MAX_POINT_LIGHTS];
 SpotLight spotLights[MAX_SPOT_LIGHTS];
+
+unsigned int pointLightCount = 0;
+unsigned int spotLightCount = 0;
 
 // TIMING
 GLfloat deltaTime = 0.0f;
@@ -73,6 +82,10 @@ bool sizeDirection = true;
 float curSize = 0.3f;
 float maxSize = 0.4f;
 float minSize = 0.2f;
+
+// Heli Variables
+glm::vec3 helicopterPos(0.0f, 0.0f, 0.0f);
+glm::vec3 helicopterRot(0.0f, 0.0f, 0.0f);
 
 
 // Vertex Shader
@@ -207,11 +220,168 @@ void CreateShaders()
 	Shader* shader1 = new Shader();
 	shader1->CreateFromFiles(vShader, fShader);
 	shaderList.push_back(*shader1);
+
+	directionalShadowShader = Shader();
+	directionalShadowShader.CreateFromFiles("Shaders/directional_shadow_map.vert", "Shaders/directional_shadow_map.frag");
+}
+
+void RenderScene()
+{
+	// MODEL 1 (rotating)
+	glm::mat4 model(1.0f);
+	model = glm::translate(model, glm::vec3(3.0f, 0.0f, -2.5f));
+	model = glm::rotate(model, currAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	brickTexture.UseTexture();
+	shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	meshList[0]->RenderMesh();
+
+	// MODEL 2 (moving)
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(-triOffset + 1.0f, 0.0f, -2.5f));
+	model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	dirtTexture.UseTexture();
+	meshList[1]->RenderMesh();
+
+	// MODEL 3 (growing/shrinking)
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -2.5f));
+	model = glm::scale(model, glm::vec3(curSize, curSize, curSize));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	meshList[2]->RenderMesh();
+
+	// MODEL 4 (static)
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(-3.0f, 0.0f, -2.5f));
+	model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	brickTexture.UseTexture();
+	meshList[3]->RenderMesh();
+
+	// Floor
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	dirtTexture.UseTexture();
+	meshList[4]->RenderMesh();
+
+	// North Wall
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	brickTexture.UseTexture();
+	meshList[5]->RenderMesh();
+
+	// West Wall
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+	model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	brickTexture.UseTexture();
+	meshList[6]->RenderMesh();
+
+	// South Wall
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+	model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	brickTexture.UseTexture();
+	meshList[7]->RenderMesh();
+
+	// East Wall
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+	model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	brickTexture.UseTexture();
+	meshList[8]->RenderMesh();
+
+	// Helicopter Model
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, helicopterPos.y, 0.0f));
+	model = glm::rotate(model, helicopterRot.x * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	heli.RenderModel();
+}
+
+void DirectionalShadowMapPass(DirectionalLight* light)
+{
+	directionalShadowShader.UseShader();
+
+	glViewport(0, 0, light->GetShadowMap()->GetShadowWidth(), light->GetShadowMap()->GetShadowHeight());
+
+	light->GetShadowMap()->Write();
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	uniformModel = directionalShadowShader.GetModelLocation();
+	glm::mat4 lightTransform = light->CalculateLightTransform();
+	directionalShadowShader.SetDirectionalLightTrainsform(&lightTransform);
+
+	RenderScene();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
+{
+	shaderList[0].UseShader();
+
+	// assign uniforms
+	uniformModel = shaderList[0].GetModelLocation();
+	uniformProjection = shaderList[0].GetProjectionLocation();
+	uniformView = shaderList[0].GetViewLocation();
+	uniformEyePosition = shaderList[0].GetEyePositionLocation();
+	uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
+	uniformShininess = shaderList[0].GetShininessLocation();
+
+	glViewport(0, 0, 800, 600);
+
+	// Clear window
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+	glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+
+	// Assign lighting to shader
+	shaderList[0].SetDirectionalLight(&mainLight);
+	shaderList[0].SetPointLights(pointLights, pointLightCount);
+	shaderList[0].SetSpotLights(spotLights, spotLightCount);
+	glm::mat4 lightTransform = mainLight.CalculateLightTransform();
+	shaderList[0].SetDirectionalLightTrainsform(&lightTransform);
+
+	mainLight.GetShadowMap()->Read(GL_TEXTURE1);
+	shaderList[0].SetTexture(0);
+	shaderList[0].SetDirectionalShadowMap(1);
+
+	glm::vec3 flashlightLocation = camera.getCameraPosition();
+	flashlightLocation.y -= 0.3f;
+	spotLights[0].SetFlash(flashlightLocation, camera.getCameraDirection());
+
+	RenderScene();
 }
 
 int main()
 {
-	mainWindow = Window(1920, 1080);
+	mainWindow = Window(800, 600);
 	mainWindow.Initialize();
 
 	CreateObjects();
@@ -232,18 +402,19 @@ int main()
 	shinyMaterial = Material(1.0f, 32);
 	dullMaterial = Material(0.3f, 4);
 
+	// create Heli Model
 	heli = Model();
 	heli.LoadModel("Models/Seahawk.obj");
-	
+
 	// load lighting
 	mainLight = DirectionalLight
 	(
+		1024, 1024,			// default size
 		1.0f, 1.0f, 1.0f,	// R G B
 		0.1f, 0.1f,			// ambient + diffuse intensity
 		0.0f, 0.0f, 0.0f	// direction
 	); 
 
-	unsigned int pointLightCount = 0;
 	pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,	// R G B
 								0.0f, 0.5f,			// ambient + diffuse intensity
 								-3.5f, 0.0f, 3.5f,	// position
@@ -265,7 +436,6 @@ int main()
 								0.3f, 0.1f, 0.1f);
 	pointLightCount++;
 	
-	unsigned int spotLightCount = 0;
 	spotLights[0] = SpotLight
 	(
 		1.0f, 1.0f, 1.0f,		// R G B
@@ -288,16 +458,13 @@ int main()
 	);
 	spotLightCount++;
 	
-	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
-		uniformSpecularIntensity = 0, uniformShininess = 0; 
+	
 
 	// setup projection
 	glm::mat4 projection = glm::perspective(45.0f, mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
 
 	Assimp::Importer importer;
 
-	glm::vec3 helicopterPos(0.0f, 0.0f, 0.0f);
-	glm::vec3 helicopterRot(0.0f, 0.0f, 0.0f);
 
 	// loop until window closes
 	while (!mainWindow.getWindowShouldClose())
@@ -383,136 +550,18 @@ int main()
 		// **************************************** //
 
 
-		// Clear window
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// assigns shader
-		shaderList[0].UseShader();
-
-		// assign uniforms
-		uniformModel = shaderList[0].GetModelLocation();
-		uniformProjection = shaderList[0].GetProjectionLocation();
-		uniformView = shaderList[0].GetViewLocation();
-		uniformEyePosition = shaderList[0].GetEyePositionLocation();
-		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
-		uniformShininess = shaderList[0].GetShininessLocation();
-
-		glm::vec3 flashlightLocation = camera.getCameraPosition();
-		flashlightLocation.y -= 0.3f;
-		spotLights[0].SetFlash(flashlightLocation, camera.getCameraDirection());
+		
 
 		if (camera.getCameraPosition().y < -2.0f)
 		{
 			printf("below -2");
 		}
 
-		// Assign lighting to shader
-		shaderList[0].SetDirectionalLight(&mainLight);
-		shaderList[0].SetPointLights(pointLights, pointLightCount);
-		shaderList[0].SetSpotLights(spotLights, spotLightCount);
+		// render scene to buffer
+		DirectionalShadowMapPass(&mainLight);
+		RenderPass(projection, camera.calculateViewMatrix());
 
-
-		// **** ORDER OF OPERATIONS ***** //
-		// translate(OBJECT, OFFSET)
-		// rotate(OBJECT, ROTATION (in Rad), AXIS(x, y, z))
-		// scale(OBJECT, vec3)
-
-		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
-		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
-
-		// MODEL 1 (rotating)
-		glm::mat4 model(1.0f);
-		model = glm::translate(model, glm::vec3(3.0f, 0.0f, -2.5f));
-		model = glm::rotate(model, currAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		brickTexture.UseTexture();
-		shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[0]->RenderMesh();
-
-		// MODEL 2 (moving)
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-triOffset + 1.0f, 0.0f, -2.5f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		dirtTexture.UseTexture();
-		meshList[1]->RenderMesh();
-
-		// MODEL 3 (growing/shrinking)
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -2.5f));
-		model = glm::scale(model, glm::vec3(curSize, curSize, curSize));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		meshList[2]->RenderMesh();
-
-		// MODEL 4 (static)
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, -2.5f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		brickTexture.UseTexture();
-		meshList[3]->RenderMesh();
 		
-		// Floor
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		dirtTexture.UseTexture();
-		meshList[4]->RenderMesh();
-
-		// North Wall
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		brickTexture.UseTexture();
-		meshList[5]->RenderMesh();
-		
-		// West Wall
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		brickTexture.UseTexture();
-		meshList[6]->RenderMesh();
-
-		// South Wall
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		brickTexture.UseTexture();
-		meshList[7]->RenderMesh();
-
-		// East Wall
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		brickTexture.UseTexture();
-		meshList[8]->RenderMesh();
-
-		// Helicopter Model
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, helicopterPos.y, 0.0f));
-		model = glm::rotate(model, helicopterRot.x * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		heli.RenderModel(); 
 
 		glUseProgram(0);
 
