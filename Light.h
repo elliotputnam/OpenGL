@@ -2,6 +2,7 @@
 
 #include <GL\glew.h>
 #include <glm\glm.hpp>
+#include <glm\gtc\matrix_transform.hpp>
 
 #include "ShadowMap.h"
 
@@ -23,6 +24,7 @@ protected:
 	GLfloat diffuseIntensity;
 
 	glm::mat4 lightProj;
+
 	ShadowMap* shadowMap;
 };
 

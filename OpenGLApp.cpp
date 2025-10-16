@@ -26,7 +26,6 @@
 #include "SpotLight.h"
 #include "Model.h"
 
-#include "assimp/Importer.hpp"
 #include <assimp/BaseImporter.h>
 #include <assimp/Importer.hpp>
 
@@ -35,7 +34,7 @@
 const float toRadians = 3.14159265f / 180.0f;
 
 GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
-uniformSpecularIntensity = 0, uniformShininess = 0;
+uniformSpecularIntensity = 0, uniformShininess = 0, uniformDirectionalLightTransform = 0;
 
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -48,6 +47,7 @@ Camera camera;
 Texture brickTexture;
 Texture dirtTexture;
 Texture plainTexture;
+Texture heliTexture;
 
 // MATERIALS
 Material shinyMaterial;
@@ -221,7 +221,6 @@ void CreateShaders()
 	shader1->CreateFromFiles(vShader, fShader);
 	shaderList.push_back(*shader1);
 
-	directionalShadowShader = Shader();
 	directionalShadowShader.CreateFromFiles("Shaders/directional_shadow_map.vert", "Shaders/directional_shadow_map.frag");
 }
 
@@ -317,6 +316,7 @@ void RenderScene()
 	model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	heliTexture.UseTexture();
 	heli.RenderModel();
 }
 
@@ -327,12 +327,11 @@ void DirectionalShadowMapPass(DirectionalLight* light)
 	glViewport(0, 0, light->GetShadowMap()->GetShadowWidth(), light->GetShadowMap()->GetShadowHeight());
 
 	light->GetShadowMap()->Write();
-
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	uniformModel = directionalShadowShader.GetModelLocation();
-	glm::mat4 lightTransform = light->CalculateLightTransform();
-	directionalShadowShader.SetDirectionalLightTrainsform(&lightTransform);
+	glm::mat4 dirLightTransform = light->CalculateLightTransform();
+	directionalShadowShader.SetDirectionalLightTransform(&dirLightTransform);
 
 	RenderScene();
 
@@ -351,7 +350,7 @@ void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 	uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 	uniformShininess = shaderList[0].GetShininessLocation();
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// Clear window
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -365,8 +364,8 @@ void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 	shaderList[0].SetDirectionalLight(&mainLight);
 	shaderList[0].SetPointLights(pointLights, pointLightCount);
 	shaderList[0].SetSpotLights(spotLights, spotLightCount);
-	glm::mat4 lightTransform = mainLight.CalculateLightTransform();
-	shaderList[0].SetDirectionalLightTrainsform(&lightTransform);
+	glm::mat4 mainlightTransform = mainLight.CalculateLightTransform();
+	shaderList[0].SetDirectionalLightTransform(&mainlightTransform);
 
 	mainLight.GetShadowMap()->Read(GL_TEXTURE1);
 	shaderList[0].SetTexture(0);
@@ -374,14 +373,14 @@ void RenderPass(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 
 	glm::vec3 flashlightLocation = camera.getCameraPosition();
 	flashlightLocation.y -= 0.3f;
-	spotLights[0].SetFlash(flashlightLocation, camera.getCameraDirection());
+	//spotLights[0].SetFlash(flashlightLocation, camera.getCameraDirection());
 
 	RenderScene();
 }
 
 int main()
 {
-	mainWindow = Window(800, 600);
+	mainWindow = Window(WINDOW_WIDTH, WINDOW_HEIGHT);
 	mainWindow.Initialize();
 
 	CreateObjects();
@@ -397,6 +396,8 @@ int main()
 	dirtTexture.LoadTextureA();
 	plainTexture = Texture("Textures/plain.png");
 	plainTexture.LoadTextureA();
+	heliTexture = Texture("Textures/TEX_SBMP.jpg");
+	heliTexture.LoadTexture();
 
 	// Specular lighting
 	shinyMaterial = Material(1.0f, 32);
@@ -409,10 +410,10 @@ int main()
 	// load lighting
 	mainLight = DirectionalLight
 	(
-		1024, 1024,			// default size
-		1.0f, 1.0f, 1.0f,	// R G B
-		0.1f, 0.1f,			// ambient + diffuse intensity
-		0.0f, 0.0f, 0.0f	// direction
+		2048, 2048,				// default size
+		1.0f, 1.0f, 1.0f,		// R G B
+		0.01f, 0.3f,			// ambient + diffuse intensity
+		0.0f, -15.0f, -10.0f	// direction
 	); 
 
 	pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,	// R G B
@@ -563,7 +564,7 @@ int main()
 
 		
 
-		glUseProgram(0);
+		//glUseProgram(0);
 
 		// Swap drawn and drawing buffers
 		mainWindow.swapBuffers();

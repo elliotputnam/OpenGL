@@ -1,5 +1,6 @@
 #include "ShadowMap.h"
-#include <stdio.h>
+
+
 
 ShadowMap::ShadowMap()
 {
@@ -7,49 +8,47 @@ ShadowMap::ShadowMap()
 	shadowMap = 0;
 }
 
-bool ShadowMap::Init(GLuint width, GLuint height)
+bool ShadowMap::Init(unsigned int width, unsigned int height)
 {
 	shadowWidth = width; shadowHeight = height;
-	
+
 	glGenFramebuffers(1, &FBO);
 
 	glGenTextures(1, &shadowMap);
 	glBindTexture(GL_TEXTURE_2D, shadowMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowWidth, shadowHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // linear blends pixels - Nearest is more pixelated
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowMap, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, FBO);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowMap, 0);
 
-	// Don't draw or read from color
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
 
-	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
-	if (status != GL_FRAMEBUFFER_COMPLETE)
+	if (Status != GL_FRAMEBUFFER_COMPLETE)
 	{
-		printf("framebuffer Error: %i\n", status);
+		printf("Framebuffer error: %s\n", Status);
 		return false;
 	}
 
-	// drawing to current frame buffer
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	return true;
 }
 
 void ShadowMap::Write()
 {
-	// drawing to off screen buffer
-	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, FBO);
 }
 
-void ShadowMap::Read(GLenum textureUnit)
+void ShadowMap::Read(GLenum texUnit)
 {
-	glActiveTexture(textureUnit);
+	glActiveTexture(texUnit);
 	glBindTexture(GL_TEXTURE_2D, shadowMap);
 }
 
