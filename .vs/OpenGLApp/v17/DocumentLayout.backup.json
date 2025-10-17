@@ -1,60 +1,60 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Projects\\OpenGL\\",
+  "WorkspaceRootPath": "C:\\Workspace\\OpenGL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ellio\\AppData\\Local\\Temp\\585a205d-d4af-4f49-a365-530aa1ea25ae_OpenGLCourseApp_DirShadow.zip.5ae\\OpenGLCourseApp\\OpenGLCourseApp\\Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\DirectionalLight.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\DirectionalLight.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:DirectionalLight.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\ShadowMap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\ShadowMap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:ShadowMap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\CommonValues.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\CommonValues.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:CommonValues.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\DirectionalLight.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\DirectionalLight.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:DirectionalLight.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\Light.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\Light.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:Light.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\PointLight.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\PointLight.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:PointLight.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\PointLight.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\PointLight.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:PointLight.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\ShadowMap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\ShadowMap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:ShadowMap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -71,11 +71,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "OpenGLApp.cpp",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\OpenGLApp.cpp",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\OpenGLApp.cpp",
               "RelativeDocumentMoniker": "OpenGLApp.cpp",
-              "ToolTip": "C:\\Projects\\OpenGL\\OpenGLApp.cpp",
+              "ToolTip": "C:\\Workspace\\OpenGL\\OpenGLApp.cpp",
               "RelativeToolTip": "OpenGLApp.cpp",
-              "ViewState": "AgIAAH0BAAAAAAAAAAAAAJABAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAMUBAAAAAAAAAAAAAJABAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-05T01:10:02.512Z",
               "IsPinned": true,
@@ -85,161 +85,145 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Texture.cpp",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\Texture.cpp",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\Texture.cpp",
               "RelativeDocumentMoniker": "Texture.cpp",
-              "ToolTip": "C:\\Projects\\OpenGL\\Texture.cpp",
+              "ToolTip": "C:\\Workspace\\OpenGL\\Texture.cpp",
               "RelativeToolTip": "Texture.cpp",
               "ViewState": "AgIAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-16T01:52:14.409Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d3750d8a-574b-4fb3-b7e2-aa8af40e8231}"
+              "WhenOpened": "2025-10-16T01:52:14.409Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "CommonValues.h",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\CommonValues.h",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\CommonValues.h",
               "RelativeDocumentMoniker": "CommonValues.h",
-              "ToolTip": "C:\\Projects\\OpenGL\\CommonValues.h",
+              "ToolTip": "C:\\Workspace\\OpenGL\\CommonValues.h",
               "RelativeToolTip": "CommonValues.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-16T01:04:29.155Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T01:04:29.155Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "DirectionalLight.cpp",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\DirectionalLight.cpp",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\DirectionalLight.cpp",
               "RelativeDocumentMoniker": "DirectionalLight.cpp",
-              "ToolTip": "C:\\Projects\\OpenGL\\DirectionalLight.cpp",
+              "ToolTip": "C:\\Workspace\\OpenGL\\DirectionalLight.cpp",
               "RelativeToolTip": "DirectionalLight.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-16T00:58:16.675Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:58:16.675Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
               "Title": "DirectionalLight.h",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\DirectionalLight.h",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\DirectionalLight.h",
               "RelativeDocumentMoniker": "DirectionalLight.h",
-              "ToolTip": "C:\\Projects\\OpenGL\\DirectionalLight.h",
+              "ToolTip": "C:\\Workspace\\OpenGL\\DirectionalLight.h",
               "RelativeToolTip": "DirectionalLight.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-16T00:58:14.816Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:58:14.816Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
               "Title": "Light.h",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\Light.h",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\Light.h",
               "RelativeDocumentMoniker": "Light.h",
-              "ToolTip": "C:\\Projects\\OpenGL\\Light.h",
+              "ToolTip": "C:\\Workspace\\OpenGL\\Light.h",
               "RelativeToolTip": "Light.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-16T00:57:06.723Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:57:06.723Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "Light.cpp",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\Light.cpp",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\Light.cpp",
               "RelativeDocumentMoniker": "Light.cpp",
-              "ToolTip": "C:\\Projects\\OpenGL\\Light.cpp",
+              "ToolTip": "C:\\Workspace\\OpenGL\\Light.cpp",
               "RelativeToolTip": "Light.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-16T00:55:50.924Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:55:50.924Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
               "Title": "PointLight.h",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\PointLight.h",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\PointLight.h",
               "RelativeDocumentMoniker": "PointLight.h",
-              "ToolTip": "C:\\Projects\\OpenGL\\PointLight.h",
+              "ToolTip": "C:\\Workspace\\OpenGL\\PointLight.h",
               "RelativeToolTip": "PointLight.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-16T00:55:07.636Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:55:07.636Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
               "Title": "PointLight.cpp",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\PointLight.cpp",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\PointLight.cpp",
               "RelativeDocumentMoniker": "PointLight.cpp",
-              "ToolTip": "C:\\Projects\\OpenGL\\PointLight.cpp",
+              "ToolTip": "C:\\Workspace\\OpenGL\\PointLight.cpp",
               "RelativeToolTip": "PointLight.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-16T00:54:34.306Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:54:34.306Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
               "Title": "Shader.cpp",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\Shader.cpp",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\Shader.cpp",
               "RelativeDocumentMoniker": "Shader.cpp",
-              "ToolTip": "C:\\Projects\\OpenGL\\Shader.cpp",
+              "ToolTip": "C:\\Workspace\\OpenGL\\Shader.cpp",
               "RelativeToolTip": "Shader.cpp",
               "ViewState": "AgIAAN4AAAAAAAAAAAAAAPkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-16T00:49:26.952Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:49:26.952Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
               "Title": "Shader.h",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\Shader.h",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\Shader.h",
               "RelativeDocumentMoniker": "Shader.h",
-              "ToolTip": "C:\\Projects\\OpenGL\\Shader.h",
+              "ToolTip": "C:\\Workspace\\OpenGL\\Shader.h",
               "RelativeToolTip": "Shader.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-16T00:47:28.245Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:47:28.245Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
               "Title": "ShadowMap.h",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\ShadowMap.h",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\ShadowMap.h",
               "RelativeDocumentMoniker": "ShadowMap.h",
-              "ToolTip": "C:\\Projects\\OpenGL\\ShadowMap.h",
+              "ToolTip": "C:\\Workspace\\OpenGL\\ShadowMap.h",
               "RelativeToolTip": "ShadowMap.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-16T00:42:56.952Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:42:56.952Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "ShadowMap.cpp",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\ShadowMap.cpp",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\ShadowMap.cpp",
               "RelativeDocumentMoniker": "ShadowMap.cpp",
-              "ToolTip": "C:\\Projects\\OpenGL\\ShadowMap.cpp",
+              "ToolTip": "C:\\Workspace\\OpenGL\\ShadowMap.cpp",
               "RelativeToolTip": "ShadowMap.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-16T00:42:54.516Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T00:42:54.516Z"
             }
           ]
         }
@@ -253,7 +237,7 @@
         "Display": 1,
         "X": -5,
         "Y": 85,
-        "Width": 2245,
+        "Width": 1940,
         "Height": 996,
         "WindowState": 0
       },
@@ -270,7 +254,6 @@
               "RelativeDocumentMoniker": "..\\..\\Users\\ellio\\AppData\\Local\\Temp\\585a205d-d4af-4f49-a365-530aa1ea25ae_OpenGLCourseApp_DirShadow.zip.5ae\\OpenGLCourseApp\\OpenGLCourseApp\\Texture.cpp",
               "ToolTip": "C:\\Users\\ellio\\AppData\\Local\\Temp\\585a205d-d4af-4f49-a365-530aa1ea25ae_OpenGLCourseApp_DirShadow.zip.5ae\\OpenGLCourseApp\\OpenGLCourseApp\\Texture.cpp [Read Only]",
               "RelativeToolTip": "..\\..\\Users\\ellio\\AppData\\Local\\Temp\\585a205d-d4af-4f49-a365-530aa1ea25ae_OpenGLCourseApp_DirShadow.zip.5ae\\OpenGLCourseApp\\OpenGLCourseApp\\Texture.cpp [Read Only]",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAAAgAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-16T01:51:44.642Z",
               "EditorCaption": " [Read Only]"
