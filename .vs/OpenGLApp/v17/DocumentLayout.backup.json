@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "C:\\Workspace\\OpenGL\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\OmniShadowMap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:OmniShadowMap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\OmniShadowMap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:OmniShadowMap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\ShadowMap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:ShadowMap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\ShadowMap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:ShadowMap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -20,10 +36,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\ShadowMap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:ShadowMap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\CommonValues.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -52,10 +64,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Workspace\\OpenGL\\ShadowMap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:ShadowMap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -65,11 +73,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "OpenGLApp.cpp",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\OpenGLApp.cpp",
               "RelativeDocumentMoniker": "OpenGLApp.cpp",
@@ -83,7 +91,37 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OmniShadowMap.cpp",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\OmniShadowMap.cpp",
+              "RelativeDocumentMoniker": "OmniShadowMap.cpp",
+              "ToolTip": "C:\\Workspace\\OpenGL\\OmniShadowMap.cpp",
+              "RelativeToolTip": "OmniShadowMap.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-17T17:28:02.988Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "OmniShadowMap.h",
+              "DocumentMoniker": "C:\\Workspace\\OpenGL\\OmniShadowMap.h",
+              "RelativeDocumentMoniker": "OmniShadowMap.h",
+              "ToolTip": "C:\\Workspace\\OpenGL\\OmniShadowMap.h",
+              "RelativeToolTip": "OmniShadowMap.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-17T17:26:13.275Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Texture.cpp",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\Texture.cpp",
               "RelativeDocumentMoniker": "Texture.cpp",
@@ -95,7 +133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "CommonValues.h",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\CommonValues.h",
               "RelativeDocumentMoniker": "CommonValues.h",
@@ -107,7 +145,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "DirectionalLight.cpp",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\DirectionalLight.cpp",
               "RelativeDocumentMoniker": "DirectionalLight.cpp",
@@ -119,7 +157,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "DirectionalLight.h",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\DirectionalLight.h",
               "RelativeDocumentMoniker": "DirectionalLight.h",
@@ -131,7 +169,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "Light.h",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\Light.h",
               "RelativeDocumentMoniker": "Light.h",
@@ -143,7 +181,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "Light.cpp",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\Light.cpp",
               "RelativeDocumentMoniker": "Light.cpp",
@@ -155,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "PointLight.h",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\PointLight.h",
               "RelativeDocumentMoniker": "PointLight.h",
@@ -167,7 +205,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "PointLight.cpp",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\PointLight.cpp",
               "RelativeDocumentMoniker": "PointLight.cpp",
@@ -179,7 +217,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Shader.cpp",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\Shader.cpp",
               "RelativeDocumentMoniker": "Shader.cpp",
@@ -191,7 +229,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "Shader.h",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\Shader.h",
               "RelativeDocumentMoniker": "Shader.h",
@@ -203,27 +241,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 4,
               "Title": "ShadowMap.h",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\ShadowMap.h",
               "RelativeDocumentMoniker": "ShadowMap.h",
               "ToolTip": "C:\\Workspace\\OpenGL\\ShadowMap.h",
               "RelativeToolTip": "ShadowMap.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-16T00:42:56.952Z"
+              "WhenOpened": "2025-10-16T00:42:56.952Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "ShadowMap.cpp",
               "DocumentMoniker": "C:\\Workspace\\OpenGL\\ShadowMap.cpp",
               "RelativeDocumentMoniker": "ShadowMap.cpp",
               "ToolTip": "C:\\Workspace\\OpenGL\\ShadowMap.cpp",
               "RelativeToolTip": "ShadowMap.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACgAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-16T00:42:54.516Z"
+              "WhenOpened": "2025-10-16T00:42:54.516Z",
+              "EditorCaption": ""
             }
           ]
         }
@@ -248,7 +288,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Texture.cpp",
               "DocumentMoniker": "C:\\Users\\ellio\\AppData\\Local\\Temp\\585a205d-d4af-4f49-a365-530aa1ea25ae_OpenGLCourseApp_DirShadow.zip.5ae\\OpenGLCourseApp\\OpenGLCourseApp\\Texture.cpp",
               "RelativeDocumentMoniker": "..\\..\\Users\\ellio\\AppData\\Local\\Temp\\585a205d-d4af-4f49-a365-530aa1ea25ae_OpenGLCourseApp_DirShadow.zip.5ae\\OpenGLCourseApp\\OpenGLCourseApp\\Texture.cpp",

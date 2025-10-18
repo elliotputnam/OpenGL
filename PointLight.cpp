@@ -11,15 +11,25 @@ PointLight::PointLight() : Light()
 }
 
 PointLight::PointLight(
+	GLuint shadowWidth, GLuint shadowHeight,
+	GLfloat near, GLfloat far,
 	GLfloat red, GLfloat green, GLfloat blue,
 	GLfloat aIntensity, GLfloat dIntensity,
 	GLfloat xPos, GLfloat yPos, GLfloat zPos,
-	GLfloat con, GLfloat lin, GLfloat exp) : Light(1024, 1024, red, green, blue, aIntensity, dIntensity)
+	GLfloat con, GLfloat lin, GLfloat exp) : Light(shadowWidth, shadowHeight, red, green, blue, aIntensity, dIntensity)
 {
 	position = glm::vec3(xPos, yPos, zPos);
 	constant = con;
 	linear = lin;
 	exponent = exp;
+
+	farPlane = far;
+
+	float aspect = (float)shadowWidth / (float)shadowHeight;
+	lightProj = glm::perspective(glm::radians(90.0f), aspect, near, far);
+
+	shadowMap = new OmniShadowMap();
+	shadowMap->Init(shadowWidth, shadowHeight);
 }
 
 void PointLight::UseLight(GLuint ambientIntensityLocation, GLuint ambientColorLocation,
@@ -34,6 +44,16 @@ void PointLight::UseLight(GLuint ambientIntensityLocation, GLuint ambientColorLo
 	glUniform1f(constantLocation, constant);
 	glUniform1f(linearLocation, linear);
 	glUniform1f(exponentLocation, exponent);
+}
+
+std::vector<glm::mat4> PointLight::CalculateLightTransfrom()
+{
+	// bing bong
+}
+
+GLfloat PointLight::GetFarPlane()
+{
+	return farPlane;
 }
 
 PointLight::~PointLight()
