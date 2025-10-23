@@ -24,6 +24,8 @@ public:
 
 	GLfloat GetFarPlane();
 
+	glm::vec3 GetPosition();
+
 	~PointLight();
 
 protected:

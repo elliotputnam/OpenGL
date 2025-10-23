@@ -48,12 +48,28 @@ void PointLight::UseLight(GLuint ambientIntensityLocation, GLuint ambientColorLo
 
 std::vector<glm::mat4> PointLight::CalculateLightTransfrom()
 {
-	// bing bong
+	std::vector<glm::mat4> lightMatrices;
+	// +x, -x
+	lightMatrices.push_back(lightProj * glm::lookAt(position, position + glm::vec3(1.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)));
+	lightMatrices.push_back(lightProj * glm::lookAt(position, position + glm::vec3(-1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
+	// +y, -y
+	lightMatrices.push_back(lightProj * glm::lookAt(position, position + glm::vec3(0.0, 1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)));
+	lightMatrices.push_back(lightProj * glm::lookAt(position, position + glm::vec3(0.0, -1.0, 0.0), glm::vec3(0.0, 0.0, -1.0)));
+	// +z, -z
+	lightMatrices.push_back(lightProj * glm::lookAt(position, position + glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)));
+	lightMatrices.push_back(lightProj * glm::lookAt(position, position + glm::vec3(0.0, 0.0, -1.0), glm::vec3(0.0, -0.0, 0.0)));
+
+	return lightMatrices;
 }
 
 GLfloat PointLight::GetFarPlane()
 {
 	return farPlane;
+}
+
+glm::vec3 PointLight::GetPosition()
+{
+	return position;
 }
 
 PointLight::~PointLight()
