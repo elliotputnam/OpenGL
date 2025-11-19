@@ -2,9 +2,12 @@ c:\projects\opengl\openglapp\x64\release\vc143.pdb
 c:\projects\opengl\openglapp\x64\release\window.obj
 c:\projects\opengl\openglapp\x64\release\texture.obj
 c:\projects\opengl\openglapp\x64\release\spotlight.obj
+c:\projects\opengl\openglapp\x64\release\shadowmap.obj
 c:\projects\opengl\openglapp\x64\release\shader.obj
 c:\projects\opengl\openglapp\x64\release\pointlight.obj
 c:\projects\opengl\openglapp\x64\release\openglapp.obj
+c:\projects\opengl\openglapp\x64\release\networkclient.obj
+c:\projects\opengl\openglapp\x64\release\model.obj
 c:\projects\opengl\openglapp\x64\release\mesh.obj
 c:\projects\opengl\openglapp\x64\release\material.obj
 c:\projects\opengl\openglapp\x64\release\light.obj

@@ -4,6 +4,7 @@ C:\Projects\OpenGL\Light.cpp;C:\Projects\OpenGL\OpenGLApp\x64\Release\Light.obj
 C:\Projects\OpenGL\Material.cpp;C:\Projects\OpenGL\OpenGLApp\x64\Release\Material.obj
 C:\Projects\OpenGL\Mesh.cpp;C:\Projects\OpenGL\OpenGLApp\x64\Release\Mesh.obj
 C:\Projects\OpenGL\Model.cpp;C:\Projects\OpenGL\OpenGLApp\x64\Release\Model.obj
+C:\Projects\OpenGL\NetworkClient.cpp;C:\Projects\OpenGL\OpenGLApp\x64\Release\NetworkClient.obj
 C:\Projects\OpenGL\OpenGLApp.cpp;C:\Projects\OpenGL\OpenGLApp\x64\Release\OpenGLApp.obj
 C:\Projects\OpenGL\PointLight.cpp;C:\Projects\OpenGL\OpenGLApp\x64\Release\PointLight.obj
 C:\Projects\OpenGL\Shader.cpp;C:\Projects\OpenGL\OpenGLApp\x64\Release\Shader.obj
