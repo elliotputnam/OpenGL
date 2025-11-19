@@ -25,11 +25,13 @@
 #include "PointLight.h"
 #include "SpotLight.h"
 #include "Model.h"
+#include "NetworkClient.h"
 
 #include <assimp/BaseImporter.h>
 #include <assimp/Importer.hpp>
 
-
+NetworkClient net;
+std::unordered_map<int, HelicopterState> otherHelis;
 
 const float toRadians = 3.14159265f / 180.0f;
 
@@ -318,6 +320,20 @@ void RenderScene()
 	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
 	heliTexture.UseTexture();
 	heli.RenderModel();
+
+	for (auto& kv : otherHelis) {
+		const HelicopterState& h = kv.second;
+
+		glm::mat4 model(1.0f);
+		model = glm::translate(model, h.pos);
+		model = glm::rotate(model, h.rot.y * toRadians, glm::vec3(0, 1, 0));
+		model = glm::scale(model, glm::vec3(0.01f));
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		heliTexture.UseTexture();
+		heli.RenderModel();
+	}
+
 }
 
 void DirectionalShadowMapPass(DirectionalLight* light)
@@ -382,6 +398,31 @@ int main()
 {
 	mainWindow = Window(WINDOW_WIDTH, WINDOW_HEIGHT);
 	mainWindow.Initialize();
+
+	//int myClientId = 0;
+	// generate a non-zero client id (random)
+	std::srand((unsigned)time(nullptr));
+	int myClientId = (std::rand() % 100000) + 1; // 1..100000
+
+	printf("Connecting to server with clientId=%d...\n", myClientId);
+
+	// use the global `net` (do NOT redeclare locally)
+	if (!net.init("127.0.0.1", SERVER_PORT, myClientId)) {
+		printf("Failed to init network client\n");
+		// you might still want to continue in local-only mode
+	}
+	else {
+		printf("Network initialized\n");
+	}
+	HelicopterState myState{};
+	myState.id = myClientId;
+	myState.pos = glm::vec3(0, 0, 0);
+	myState.rot = glm::vec3(0, 0, 0);
+
+	std::unordered_map<int, HelicopterState> others;
+
+	// other players
+	//otherHelis.clear();
 
 	CreateObjects();
 	CreateShaders();
@@ -466,6 +507,8 @@ int main()
 
 	Assimp::Importer importer;
 
+	// sends init
+	net.sendState(myState);
 
 	// loop until window closes
 	while (!mainWindow.getWindowShouldClose())
@@ -527,6 +570,9 @@ int main()
 		// HELI ROTATION and MOVEMENT
 		bool* keys = mainWindow.getsKeys();
 		
+		// Position to check changed
+		glm::vec3 tempPosition = helicopterPos;
+		glm::vec3 tempRotation = helicopterRot;
 
 		if (keys[GLFW_KEY_UP]) 
 		{
@@ -534,29 +580,53 @@ int main()
 		}
 		if (keys[GLFW_KEY_DOWN])
 		{
-			helicopterPos.y -= 0.01f;
+			if (helicopterPos.y >= -1.0f)
+			{
+				helicopterPos.y -= 0.01f;
+			}
 		}
 		if (keys[GLFW_KEY_LEFT])
 		{
 			helicopterRot.x += 1.0f;
+			if (helicopterRot.x >= 360.0f)
+			{
+				helicopterRot.x = 0.0f;
+			}
 		}
 		if (keys[GLFW_KEY_RIGHT])
 		{
 			helicopterRot.x -= 1.0f;
+			if (helicopterRot.x <= -360.0f)
+			{
+				helicopterRot.x = 0.0f;
+			}
 		}
 
+		// update myState from local position/rotation and send once per frame
 
-		// **************************************** //
-		// **************************************** //
-		// **************************************** //
-
-
-		
-
-		if (camera.getCameraPosition().y < -2.0f)
+		myState.pos = helicopterPos;
+		myState.rot = helicopterRot;
+		myState.id = myClientId; // keep ID consistent
+		if (tempPosition != helicopterPos || tempRotation != helicopterRot)
 		{
-			printf("below -2");
+			net.sendState(myState);
 		}
+
+		// receive snapshot (non-blocking)
+		std::vector<HelicopterState> snapshot;
+		if (net.receiveSnapshot(snapshot)) {
+			for (auto& s : snapshot) {
+				if (s.id == myClientId) continue; // ignore our own in remote list
+				otherHelis[s.id] = s;
+			}
+			printf("snapshot received, ignoring self\n");
+
+		}
+
+
+		// **************************************** //
+		// **************************************** //
+		// **************************************** //
 
 		// render scene to buffer
 		DirectionalShadowMapPass(&mainLight);
