@@ -32,6 +32,7 @@
 
 NetworkClient net;
 std::unordered_map<int, HelicopterState> otherHelis;
+GLfloat lastNetworkSend = 0.0f;
 
 const float toRadians = 3.14159265f / 180.0f;
 
@@ -87,7 +88,13 @@ float minSize = 0.2f;
 
 // Heli Variables
 glm::vec3 helicopterPos(0.0f, 0.0f, 0.0f);
-glm::vec3 helicopterRot(0.0f, 0.0f, 0.0f);
+glm::vec3 helicopterRot(0.0f, 180.0f, 0.0f);
+
+// Movement & rotation speeds (units per second / degrees per second)
+float moveSpeed = 1.5f;   // tune this for your scale
+float rotSpeed = 90.0f;   // degrees per second
+float smoothForward = 0.0f;
+float smoothTurn = 0.0f;
 
 
 // Vertex Shader
@@ -180,18 +187,18 @@ void CreateObjects()
 
 	calcAverageNormals(indices, 12, vertices, 32, 8, 5);
 
-	Mesh *pyramidOne = new Mesh();
+	Mesh* pyramidOne = new Mesh();
 	pyramidOne->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(pyramidOne);
 
-	Mesh *pyramidTwo = new Mesh();
+	Mesh* pyramidTwo = new Mesh();
 	pyramidTwo->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(pyramidTwo);
-	
-	Mesh *pyramidThree = new Mesh();
+
+	Mesh* pyramidThree = new Mesh();
 	pyramidThree->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(pyramidThree);
-	
+
 	Mesh* pyramidFour = new Mesh();
 	pyramidFour->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(pyramidFour);
@@ -311,28 +318,43 @@ void RenderScene()
 	brickTexture.UseTexture();
 	meshList[8]->RenderMesh();
 
-	// Helicopter Model
-	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, helicopterPos.y, 0.0f));
-	model = glm::rotate(model, helicopterRot.x * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
-	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-	dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-	heliTexture.UseTexture();
-	heli.RenderModel();
+	// Helicopter Model (local) — apply yaw, pitch, roll
+	{
+		glm::mat4 model(1.0f);
+		model = glm::translate(model, glm::vec3(helicopterPos.x, helicopterPos.y, helicopterPos.z));
 
+		// Apply rotations: yaw (Y), pitch (X), roll (Z)
+		model = glm::rotate(model, helicopterRot.y * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // yaw
+		model = glm::rotate(model, helicopterRot.x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // pitch
+		model = glm::rotate(model, helicopterRot.z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // roll
+
+		model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		heliTexture.UseTexture();
+		heli.RenderModel();
+	}
+
+
+	// Remote helicopters (apply yaw, pitch, roll)
 	for (auto& kv : otherHelis) {
 		const HelicopterState& h = kv.second;
 
 		glm::mat4 model(1.0f);
 		model = glm::translate(model, h.pos);
-		model = glm::rotate(model, h.rot.y * toRadians, glm::vec3(0, 1, 0));
+
+		model = glm::rotate(model, h.rot.y * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // yaw
+		model = glm::rotate(model, h.rot.x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // pitch
+		model = glm::rotate(model, h.rot.z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // roll
+
 		model = glm::scale(model, glm::vec3(0.01f));
 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		heliTexture.UseTexture();
 		heli.RenderModel();
 	}
+
+
 
 }
 
@@ -422,14 +444,22 @@ int main()
 	std::unordered_map<int, HelicopterState> others;
 
 	// other players
-	//otherHelis.clear();
+	otherHelis.clear();
 
 	CreateObjects();
 	CreateShaders();
 
 	// init camera
-	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 3.0f, 0.05f);
-
+	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 3.0f, 0.05f);
+	// Initialize camera BEHIND the helicopter for third-person view
+	camera = Camera(
+		glm::vec3(0.0f, 2.0f, 5.0f),   // Position: behind and above helicopter
+		glm::vec3(0.0f, 1.0f, 0.0f),    // World up direction
+		90.0f,                          // Yaw: facing forward
+		-15.0f,                          // Pitch: angled down slightly to see helicopter
+		3.0f,                            // Move speed (for free cam mode)
+		0.05f                            // Turn speed (for free cam mode)
+	);
 	// load textures
 	brickTexture = Texture("Textures/brick.png");
 	brickTexture.LoadTextureA();
@@ -455,38 +485,38 @@ int main()
 		1.0f, 1.0f, 1.0f,		// R G B
 		0.01f, 0.3f,			// ambient + diffuse intensity
 		0.0f, -15.0f, -10.0f	// direction
-	); 
+	);
 
 	pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,	// R G B
-								0.0f, 0.5f,			// ambient + diffuse intensity
-								-3.5f, 0.0f, 3.5f,	// position
-								0.3f, 0.2f, 0.1f);	// constant, linear, exponent
+		0.0f, 0.5f,			// ambient + diffuse intensity
+		-3.5f, 0.0f, 3.5f,	// position
+		0.3f, 0.2f, 0.1f);	// constant, linear, exponent
 	pointLightCount++;
 	pointLights[1] = PointLight(0.0f, 1.0f, 0.0f,
-								0.0f, 0.5f,
-								3.5f, 0.0f, 3.5f,
-								0.3f, 0.1f, 0.1f);
+		0.0f, 0.5f,
+		3.5f, 0.0f, 3.5f,
+		0.3f, 0.1f, 0.1f);
 	pointLightCount++;
 	pointLights[2] = PointLight(1.0f, 0.0f, 0.0f,
-								0.0f, 0.5f,
-								-3.5f, 0.0f, -3.5f,
-								0.3f, 0.1f, 0.1f);
+		0.0f, 0.5f,
+		-3.5f, 0.0f, -3.5f,
+		0.3f, 0.1f, 0.1f);
 	pointLightCount++;
 	pointLights[3] = PointLight(1.0f, 1.0f, 1.0f,
-								0.0f, 0.5f,
-								3.5f, 0.0f, -3.5f,
-								0.3f, 0.1f, 0.1f);
+		0.0f, 0.5f,
+		3.5f, 0.0f, -3.5f,
+		0.3f, 0.1f, 0.1f);
 	pointLightCount++;
-	
+
 	spotLights[0] = SpotLight
 	(
 		1.0f, 1.0f, 1.0f,		// R G B
 		0.0f, 2.0f,				// ambient + diffuse intensity
 		0.0f, 0.0f, 0.0f,		// position
 		0.0f, -1.0f, 0.0f,		// direction
-	   	1.0f, 0.01f, 0.01f,		// constant, linear, exponent
+		1.0f, 0.01f, 0.01f,		// constant, linear, exponent
 		20.0f					// edge (angle)
-	);			  
+	);
 	spotLightCount++;
 
 	spotLights[1] = SpotLight
@@ -499,8 +529,6 @@ int main()
 		20.0f
 	);
 	spotLightCount++;
-	
-	
 
 	// setup projection
 	glm::mat4 projection = glm::perspective(45.0f, mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
@@ -509,6 +537,8 @@ int main()
 
 	// sends init
 	net.sendState(myState);
+
+
 
 	// loop until window closes
 	while (!mainWindow.getWindowShouldClose())
@@ -520,16 +550,14 @@ int main()
 		// Get / Handle input events
 		glfwPollEvents();
 		// Passes inputs into camera
-		camera.KeyControl(mainWindow.getsKeys(), deltaTime);
-		camera.MouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+		//camera.KeyControl(mainWindow.getsKeys(), deltaTime);
+		//camera.MouseControl(mainWindow.getXChange(), mainWindow.getYChange());
 
-
+		camera.FollowTarget(helicopterPos, helicopterRot, deltaTime);
 
 		// *********** MODEL MOVEMENT ************* // 
-		// **************************************** //
-		// **************************************** //
 
-		// TRANSLATION
+		// TRANSLATION (demo triangles)
 		if (direction)
 		{
 			triOffset += triIncrement;
@@ -565,76 +593,77 @@ int main()
 		{
 			sizeDirection = !sizeDirection;
 		}
-		
+
 
 		// HELI ROTATION and MOVEMENT
 		bool* keys = mainWindow.getsKeys();
-		
-		// Position to check changed
-		glm::vec3 tempPosition = helicopterPos;
-		glm::vec3 tempRotation = helicopterRot;
+    
+    glm::vec3 tempPosition = helicopterPos;
+    glm::vec3 tempRotation = helicopterRot;
 
-		if (keys[GLFW_KEY_UP]) 
-		{
-			helicopterPos.y += 0.01f;
-		}
-		if (keys[GLFW_KEY_DOWN])
-		{
-			if (helicopterPos.y >= -1.0f)
-			{
-				helicopterPos.y -= 0.01f;
-			}
-		}
-		if (keys[GLFW_KEY_LEFT])
-		{
-			helicopterRot.x += 1.0f;
-			if (helicopterRot.x >= 360.0f)
-			{
-				helicopterRot.x = 0.0f;
-			}
-		}
-		if (keys[GLFW_KEY_RIGHT])
-		{
-			helicopterRot.x -= 1.0f;
-			if (helicopterRot.x <= -360.0f)
-			{
-				helicopterRot.x = 0.0f;
-			}
-		}
+    // Tilt amounts
+    float maxPitch = 20.0f;
+    float maxRoll = 20.0f;
+    float tiltSpeed = 20.0f;
 
-		// update myState from local position/rotation and send once per frame
+    float turnInput = 0.0f;
+    if (keys[GLFW_KEY_LEFT])  turnInput = 1.0f;
+    if (keys[GLFW_KEY_RIGHT]) turnInput = -1.0f;
 
-		myState.pos = helicopterPos;
-		myState.rot = helicopterRot;
-		myState.id = myClientId; // keep ID consistent
-		if (tempPosition != helicopterPos || tempRotation != helicopterRot)
-		{
-			net.sendState(myState);
-		}
+    helicopterRot.y += turnInput * rotSpeed * deltaTime;
 
-		// receive snapshot (non-blocking)
-		std::vector<HelicopterState> snapshot;
-		if (net.receiveSnapshot(snapshot)) {
-			for (auto& s : snapshot) {
-				if (s.id == myClientId) continue; // ignore our own in remote list
-				otherHelis[s.id] = s;
-			}
-			printf("snapshot received, ignoring self\n");
+    float forwardInput = 0.0f;
+    if (keys[GLFW_KEY_UP])   forwardInput = -1.0f;
+    if (keys[GLFW_KEY_DOWN]) forwardInput = 0.5f;
 
-		}
+    float yawRad = glm::radians(helicopterRot.y);
+    glm::vec3 forward(
+        -sin(yawRad),
+        0.0f,
+        -cos(yawRad)
+    );
 
+    helicopterPos += forward * (forwardInput * moveSpeed * deltaTime);
 
-		// **************************************** //
-		// **************************************** //
-		// **************************************** //
+    float targetPitch = -forwardInput * maxPitch;
+    float targetRoll = -turnInput * maxRoll;
+
+    helicopterRot.x = glm::mix(helicopterRot.x, targetPitch, tiltSpeed * deltaTime);
+    helicopterRot.z = glm::mix(helicopterRot.z, targetRoll, tiltSpeed * deltaTime);
+
+    // SEND STATE AT FIXED RATE (not every frame)
+    bool hasChanged = (tempPosition != helicopterPos || tempRotation != helicopterRot);
+    bool shouldSend = (now - lastNetworkSend) >= NETWORK_SEND_INTERVAL;
+    
+    if (hasChanged && shouldSend) {
+        myState.pos = helicopterPos;
+        myState.rot = helicopterRot;
+        myState.id = myClientId;
+        
+        net.sendState(myState);
+        lastNetworkSend = now;
+    }
+
+    // Always call update for heartbeat logic
+    net.update();
+
+    // RECEIVE ALL SNAPSHOTS (drain queue)
+    std::vector<HelicopterState> snapshot;
+    if (net.receiveSnapshot(snapshot)) {
+        // Update remote helicopters
+        for (auto& s : snapshot) {
+            if (s.id == myClientId) continue; // skip self
+            otherHelis[s.id] = s;
+        }
+        // Removed debug printf - only log in debug builds
+        #ifdef _DEBUG
+        // printf("Received snapshot with %d helis\n", (int)snapshot.size());
+        #endif
+    }
 
 		// render scene to buffer
 		DirectionalShadowMapPass(&mainLight);
 		RenderPass(projection, camera.calculateViewMatrix());
-
-		
-
-		//glUseProgram(0);
 
 		// Swap drawn and drawing buffers
 		mainWindow.swapBuffers();
