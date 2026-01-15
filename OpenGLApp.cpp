@@ -252,7 +252,7 @@ int main()
 	mainWindow.Initialize();
 
 	// Initialize network
-	if (!net.init("70.172.165.98", SERVER_PORT, myClientId)) {
+	if (!net.init("127.0.0.1", SERVER_PORT, myClientId)) {
 		printf("Failed to init network client\n");
 	}
 	else {

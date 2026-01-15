@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Projects\\OpenGL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\City.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:City.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:OpenGLApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E86251F8-1B1E-45B4-B2A4-E7D8198DDDD1}|OpenGLServer\\OpenGLServer.vcxproj|C:\\Projects\\OpenGL\\OpenGLServer\\Server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{E86251F8-1B1E-45B4-B2A4-E7D8198DDDD1}|OpenGLServer\\OpenGLServer.vcxproj|solutionrelative:OpenGLServer\\Server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\City.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:City.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\City.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -29,10 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\Camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|solutionrelative:Camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E86251F8-1B1E-45B4-B2A4-E7D8198DDDD1}|OpenGLServer\\OpenGLServer.vcxproj|C:\\Projects\\OpenGL\\OpenGLServer\\Server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{E86251F8-1B1E-45B4-B2A4-E7D8198DDDD1}|OpenGLServer\\OpenGLServer.vcxproj|solutionrelative:OpenGLServer\\Server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{55D4FC86-F6D7-4369-AC3F-FFC1FFE728C0}|OpenGLApp.vcxproj|C:\\Projects\\OpenGL\\Model.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -110,16 +110,17 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "Server.cpp",
               "DocumentMoniker": "C:\\Projects\\OpenGL\\OpenGLServer\\Server.cpp",
               "RelativeDocumentMoniker": "OpenGLServer\\Server.cpp",
               "ToolTip": "C:\\Projects\\OpenGL\\OpenGLServer\\Server.cpp",
               "RelativeToolTip": "OpenGLServer\\Server.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAOoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAOoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-19T00:45:58.962Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -131,33 +132,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "OpenGLApp.cpp",
-              "DocumentMoniker": "C:\\Projects\\OpenGL\\OpenGLApp.cpp",
-              "RelativeDocumentMoniker": "OpenGLApp.cpp",
-              "ToolTip": "C:\\Projects\\OpenGL\\OpenGLApp.cpp",
-              "RelativeToolTip": "OpenGLApp.cpp",
-              "ViewState": "AgIAAKYAAAAAAAAAAAAtwKEAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-05T01:10:02.512Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "City.cpp",
               "DocumentMoniker": "C:\\Projects\\OpenGL\\City.cpp",
               "RelativeDocumentMoniker": "City.cpp",
               "ToolTip": "C:\\Projects\\OpenGL\\City.cpp",
               "RelativeToolTip": "City.cpp",
-              "ViewState": "AgIAAJwAAAAAAAAAAAAAAIQAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAAAIoAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-23T22:17:12.135Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
+              "Title": "OpenGLApp.cpp",
+              "DocumentMoniker": "C:\\Projects\\OpenGL\\OpenGLApp.cpp",
+              "RelativeDocumentMoniker": "OpenGLApp.cpp",
+              "ToolTip": "C:\\Projects\\OpenGL\\OpenGLApp.cpp",
+              "RelativeToolTip": "OpenGLApp.cpp",
+              "ViewState": "AgIAAPEAAAAAAAAAAAAtwP8AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-05T01:10:02.512Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Material.cpp",
               "DocumentMoniker": "C:\\Projects\\OpenGL\\Material.cpp",
               "RelativeDocumentMoniker": "Material.cpp",
@@ -169,7 +170,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "City.h",
               "DocumentMoniker": "C:\\Projects\\OpenGL\\City.h",
               "RelativeDocumentMoniker": "City.h",
@@ -181,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Mesh.h",
               "DocumentMoniker": "C:\\Projects\\OpenGL\\Mesh.h",
               "RelativeDocumentMoniker": "Mesh.h",
@@ -193,7 +194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Mesh.cpp",
               "DocumentMoniker": "C:\\Projects\\OpenGL\\Mesh.cpp",
               "RelativeDocumentMoniker": "Mesh.cpp",
@@ -217,7 +218,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Camera.h",
               "DocumentMoniker": "C:\\Projects\\OpenGL\\Camera.h",
               "RelativeDocumentMoniker": "Camera.h",
