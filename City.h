@@ -26,6 +26,7 @@ public:
     void CreateCity();
     void RenderCity(GLuint uniformModel, GLuint uniformSpecularIntensity, GLuint uniformShininess, float deltaTime);
     void SetTextures(Texture* brick, Texture* dirt);
+    void SetTexture(Texture* texture);
     void SetMaterials(Material* shiny, Material* dull);
 
     std::vector<Mesh*>& GetMeshList() { return meshList; }
@@ -40,6 +41,7 @@ private:
 
     Texture* brickTexture;
     Texture* dirtTexture;
+    Texture* waterTexture;
     Material* shinyMaterial;
     Material* dullMaterial;
 

@@ -51,15 +51,19 @@ Camera camera;
 // TEXTURES
 Texture brickTexture;
 Texture dirtTexture;
+Texture waterTexture;
 Texture plainTexture;
 Texture heliTexture;
+Texture jetTexture;
+Texture carrierTexture;
 
 // MATERIALS
 Material shinyMaterial;
 Material dullMaterial;
 
 Model heli;
-Model penguin;
+Model jet;
+Model carrier;
 
 // NEW: City instance
 City* city = nullptr;
@@ -104,7 +108,7 @@ int usernameToClientId(const std::string& username) {
 std::string getUsername() {
 	std::string username;
 	printf("========================================\n");
-	printf("       HELICOPTER MULTIPLAYER\n");
+	printf("              FLY HIGH \n");
 	printf("========================================\n");
 	printf("Enter your username: ");
 	std::getline(std::cin, username);
@@ -134,17 +138,34 @@ void CreateShaders()
 void RenderScene()
 {
 	// Helicopter Model (local)
+	// Jet Model
 	{
 		glm::mat4 model(1.0f);
 		model = glm::translate(model, glm::vec3(helicopterPos.x, helicopterPos.y, helicopterPos.z));
 		model = glm::rotate(model, helicopterRot.y * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, helicopterRot.x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, helicopterRot.z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+		// vertical model, rotatation for adjustments
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		model = glm::scale(model, glm::vec3(0.15f, 0.15f, 0.15f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		heliTexture.UseTexture();
-		heli.RenderModel();
+		jetTexture.UseTexture();
+		jet.RenderModel();
+	}
+
+	// Aircraft carrier model
+	{
+		glm::mat4 model(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		carrierTexture.UseTexture();
+		carrier.RenderModel();
 	}
 
 	// Remote helicopters
@@ -231,7 +252,7 @@ int main()
 	mainWindow.Initialize();
 
 	// Initialize network
-	if (!net.init("127.0.0.1", SERVER_PORT, myClientId)) {
+	if (!net.init("70.172.165.98", SERVER_PORT, myClientId)) {
 		printf("Failed to init network client\n");
 	}
 	else {
@@ -259,18 +280,26 @@ int main()
 	dirtTexture.LoadTextureA();
 	plainTexture = Texture("Textures/plain.png");
 	plainTexture.LoadTextureA();
+	waterTexture = Texture("Textures/water.jpg");
+	waterTexture.LoadTexture();
 	heliTexture = Texture("Textures/TEX_SBMP.jpg");
 	heliTexture.LoadTexture();
+	
 
 	shinyMaterial = Material(1.0f, 32);
 	dullMaterial = Material(0.3f, 4);
 
 	heli = Model();
 	heli.LoadModel("Models/Seahawk.obj");
+	jet = Model();
+	jet.LoadModel("Models/jet.obj");
+	carrier = Model();
+	carrier.LoadModel("Models/essex_scb-125_generic.obj");
 
 	// init city eventually 
 	city = new City();
 	city->SetTextures(&brickTexture, &dirtTexture);
+	city->SetTexture(&waterTexture);
 	city->SetMaterials(&shinyMaterial, &dullMaterial);
 	city->CreateCity();
 
@@ -321,7 +350,7 @@ int main()
 		helicopterRot.y += turnInput * rotSpeed * deltaTime;
 
 		float forwardInput = 0.0f;
-		if (keys[GLFW_KEY_UP])   forwardInput = -1.0f;
+		if (keys[GLFW_KEY_UP])   forwardInput = -5.0f;
 		if (keys[GLFW_KEY_DOWN]) forwardInput = 0.5f;
 
 		// Vertical movement
@@ -336,7 +365,7 @@ int main()
 
 		float targetPitch = -forwardInput * maxPitch;
 		float targetRoll = -turnInput * maxRoll;
-		helicopterRot.x = glm::mix(helicopterRot.x, targetPitch, tiltSpeed * deltaTime);
+		//helicopterRot.x = glm::mix(helicopterRot.x, targetPitch, tiltSpeed * deltaTime);
 		helicopterRot.z = glm::mix(helicopterRot.z, targetRoll, tiltSpeed * deltaTime);
 
 		// NETWORK SEND

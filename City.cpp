@@ -3,6 +3,7 @@
 City::City() : 
     brickTexture(nullptr), 
     dirtTexture(nullptr),
+    waterTexture(nullptr),
     shinyMaterial(nullptr),
     dullMaterial(nullptr),
     pyramidMeshIndex(-1),
@@ -30,6 +31,11 @@ City::~City() {
 void City::SetTextures(Texture* brick, Texture* dirt) {
     brickTexture = brick;
     dirtTexture = dirt;
+}
+
+void City::SetTexture(Texture* water)
+{
+    waterTexture = water;
 }
 
 void City::SetMaterials(Material* shiny, Material* dull) {
@@ -87,10 +93,10 @@ void City::CreateMeshes() {
     // Floor mesh
     unsigned int floorIndices[] = { 0, 2, 1, 1, 2, 3 };
     GLfloat floorVertices[] = {
-        -10.f, 0.0f, -10.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-        10.0f, 0.0f, -10.0f, 10.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-        -10.0f, 0.0f, 10.0f, 0.0f, 10.0f, 0.0f, -1.0f, 0.0f,
-        10.0f, 0.0f, 10.0f, 10.0f, 10.0f, 0.0f, -1.0f, 0.0f
+        -250.f, 0.0f, -250.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+        250.0f, 0.0f, -250.0f, 250.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+        -250.0f, 0.0f, 250.0f, 0.0f, 250.0f, 0.0f, -1.0f, 0.0f,
+        250.0f, 0.0f, 250.0f, 250.0f, 250.0f, 0.0f, -1.0f, 0.0f
     };
     
     Mesh* floorMesh = new Mesh();
@@ -117,7 +123,7 @@ void City::CreateBuildings() {
     // Rotating pyramid
     buildings.push_back({
         glm::vec3(3.0f, 0.0f, -2.5f),
-        glm::vec3(0.4f, 0.4f, 0.4f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
         0.0f, // Will be animated
         pyramidMeshIndex,
         brickTexture,
@@ -127,7 +133,7 @@ void City::CreateBuildings() {
     // Moving pyramid
     buildings.push_back({
         glm::vec3(-triOffset + 1.0f, 0.0f, -2.5f),
-        glm::vec3(0.4f, 0.4f, 0.4f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
         0.0f,
         pyramidMeshIndex,
         dirtTexture,
@@ -137,7 +143,7 @@ void City::CreateBuildings() {
     // Resizing pyramid
     buildings.push_back({
         glm::vec3(-1.0f, 0.0f, -2.5f),
-        glm::vec3(curSize, curSize, curSize),
+        glm::vec3(0.0f, 0.0f, 0.0f),
         0.0f,
         pyramidMeshIndex,
         brickTexture,
@@ -147,7 +153,7 @@ void City::CreateBuildings() {
     // Static pyramid
     buildings.push_back({
         glm::vec3(-3.0f, 0.0f, -2.5f),
-        glm::vec3(0.4f, 0.4f, 0.4f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
         0.0f,
         pyramidMeshIndex,
         brickTexture,
@@ -158,53 +164,53 @@ void City::CreateBuildings() {
 void City::CreateFloorAndWalls() {
     // Floor
     buildings.push_back({
-        glm::vec3(0.0f, -1.0f, 0.0f),
+        glm::vec3(0.0f, -2.0f, 0.0f),
         glm::vec3(0.4f, 0.4f, 0.4f),
         0.0f,
         floorMeshIndex,
-        dirtTexture,
+        waterTexture,
         dullMaterial
     });
     
-    // North wall
-    buildings.push_back({
-        glm::vec3(0.0f, -1.0f, 0.0f),
-        glm::vec3(0.4f, 0.4f, 0.4f),
-        0.0f,
-        wallMeshIndex,
-        brickTexture,
-        dullMaterial
-    });
-    
-    // West wall
-    buildings.push_back({
-        glm::vec3(0.0f, -1.0f, 0.0f),
-        glm::vec3(0.4f, 0.4f, 0.4f),
-        90.0f,
-        wallMeshIndex,
-        brickTexture,
-        dullMaterial
-    });
-    
-    // South wall
-    buildings.push_back({
-        glm::vec3(0.0f, -1.0f, 0.0f),
-        glm::vec3(0.4f, 0.4f, 0.4f),
-        180.0f,
-        wallMeshIndex,
-        brickTexture,
-        dullMaterial
-    });
-    
-    // East wall
-    buildings.push_back({
-        glm::vec3(0.0f, -1.0f, 0.0f),
-        glm::vec3(0.4f, 0.4f, 0.4f),
-        -90.0f,
-        wallMeshIndex,
-        brickTexture,
-        dullMaterial
-    });
+    //// North wall
+    //buildings.push_back({
+    //    glm::vec3(0.0f, -1.0f, 0.0f),
+    //    glm::vec3(0.4f, 0.4f, 0.4f),
+    //    0.0f,
+    //    wallMeshIndex,
+    //    brickTexture,
+    //    dullMaterial
+    //});
+    //
+    //// West wall
+    //buildings.push_back({
+    //    glm::vec3(0.0f, -1.0f, 0.0f),
+    //    glm::vec3(0.4f, 0.4f, 0.4f),
+    //    90.0f,
+    //    wallMeshIndex,
+    //    brickTexture,
+    //    dullMaterial
+    //});
+    //
+    //// South wall
+    //buildings.push_back({
+    //    glm::vec3(0.0f, -1.0f, 0.0f),
+    //    glm::vec3(0.4f, 0.4f, 0.4f),
+    //    180.0f,
+    //    wallMeshIndex,
+    //    brickTexture,
+    //    dullMaterial
+    //});
+    //
+    //// East wall
+    //buildings.push_back({
+    //    glm::vec3(0.0f, -1.0f, 0.0f),
+    //    glm::vec3(0.4f, 0.4f, 0.4f),
+    //    -90.0f,
+    //    wallMeshIndex,
+    //    brickTexture,
+    //    dullMaterial
+    //});
 }
 
 void City::CreateCity() {
