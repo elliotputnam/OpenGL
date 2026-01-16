@@ -80,9 +80,9 @@ unsigned int spotLightCount = 0;
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
 
-// Heli Variables
-glm::vec3 helicopterPos(0.0f, 0.0f, 0.0f);
-glm::vec3 helicopterRot(0.0f, 180.0f, 0.0f);
+// Jet Variables
+glm::vec3 jetPos(0.0f, 0.0f, 0.0f);
+glm::vec3 jetRot(0.0f, 180.0f, 0.0f);
 
 // Movement & rotation speeds
 float moveSpeed = 1.5f;
@@ -141,10 +141,10 @@ void RenderScene()
 	// Jet Model
 	{
 		glm::mat4 model(1.0f);
-		model = glm::translate(model, glm::vec3(helicopterPos.x, helicopterPos.y, helicopterPos.z));
-		model = glm::rotate(model, helicopterRot.y * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, helicopterRot.x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, helicopterRot.z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(jetPos.x, jetPos.y, jetPos.z));
+		model = glm::rotate(model, jetRot.y * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, jetRot.x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, jetRot.z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		// vertical model, rotatation for adjustments
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -176,10 +176,13 @@ void RenderScene()
 		model = glm::rotate(model, h.rot.y * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, h.rot.x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, h.rot.z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::scale(model, glm::vec3(0.01f));
+		// vertical model, rotatation for adjustments
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(0.15f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		heliTexture.UseTexture();
-		heli.RenderModel();
+		jetTexture.UseTexture();
+		jet.RenderModel();
 	}
 }
 
@@ -327,6 +330,10 @@ int main()
 	net.sendState(myState);
 
 	bool receivedSavedData = false;
+	float currThrust = 0.0f;
+	float minThrustAir = -2.0f;
+	float maxThrustAir = -7.0f;
+
 
 	while (!mainWindow.getWindowShouldClose())
 	{
@@ -335,46 +342,63 @@ int main()
 		lastTime = now;
 
 		glfwPollEvents();
-		camera.FollowTarget(helicopterPos, helicopterRot, deltaTime);
+		camera.FollowTarget(jetPos, jetRot, deltaTime);
 
 		// HELI CONTROLS
 		bool* keys = mainWindow.getsKeys();
-		glm::vec3 tempPosition = helicopterPos;
-		glm::vec3 tempRotation = helicopterRot;
+		glm::vec3 tempPosition = jetPos;
+		glm::vec3 tempRotation = jetRot;
 
-		float maxPitch = 20.0f, maxRoll = 20.0f, tiltSpeed = 20.0f;
+		float maxPitch = 10.0f, maxRoll = 20.0f, tiltSpeed = 20.0f;
 
 		float turnInput = 0.0f;
 		if (keys[GLFW_KEY_LEFT])  turnInput = 1.0f;
 		if (keys[GLFW_KEY_RIGHT]) turnInput = -1.0f;
-		helicopterRot.y += turnInput * rotSpeed * deltaTime;
+		jetRot.y += turnInput * rotSpeed * deltaTime;
 
-		float forwardInput = 0.0f;
-		if (keys[GLFW_KEY_UP])   forwardInput = -5.0f;
-		if (keys[GLFW_KEY_DOWN]) forwardInput = 0.5f;
+		
+		if (keys[GLFW_KEY_UP])
+		{
+			currThrust -= 0.1f;
+			printf("increase speed: %f", currThrust);
+			if (currThrust <= maxThrustAir)
+			{
+				currThrust = maxThrustAir;
+				printf("max speed reached: %f", currThrust);
+			}
+		}
+		if (keys[GLFW_KEY_DOWN])
+		{
+			currThrust += 0.1f;
+			if (currThrust >= minThrustAir)
+			{
+				currThrust = minThrustAir;
+			}
+			
+		}
 
 		// Vertical movement
 		float verticalInput = 0.0f;
 		if (keys[GLFW_KEY_W]) verticalInput = 1.0f;  // up
 		if (keys[GLFW_KEY_S]) verticalInput = -1.0f; // down
-		helicopterPos.y += verticalInput * moveSpeed * deltaTime;
+		jetPos.y += verticalInput * moveSpeed * deltaTime;
 
-		float yawRad = glm::radians(helicopterRot.y);
+		float yawRad = glm::radians(jetRot.y);
 		glm::vec3 forward(-sin(yawRad), 0.0f, -cos(yawRad));
-		helicopterPos += forward * (forwardInput * moveSpeed * deltaTime);
+		jetPos += forward * ((minThrustAir + currThrust) * moveSpeed * deltaTime);
 
-		float targetPitch = -forwardInput * maxPitch;
+		float targetPitch = -verticalInput * maxPitch;
 		float targetRoll = -turnInput * maxRoll;
-		//helicopterRot.x = glm::mix(helicopterRot.x, targetPitch, tiltSpeed * deltaTime);
-		helicopterRot.z = glm::mix(helicopterRot.z, targetRoll, tiltSpeed * deltaTime);
+		jetRot.x = glm::mix(jetRot.x, targetPitch, tiltSpeed * deltaTime);
+		jetRot.z = glm::mix(jetRot.z, targetRoll, tiltSpeed * deltaTime);
 
 		// NETWORK SEND
-		bool hasChanged = (tempPosition != helicopterPos || tempRotation != helicopterRot);
+		bool hasChanged = (tempPosition != jetPos || tempRotation != jetRot);
 		bool shouldSend = (now - lastNetworkSend) >= NETWORK_SEND_INTERVAL;
 
 		if (hasChanged && shouldSend) {
-			myState.pos = helicopterPos;
-			myState.rot = helicopterRot;
+			myState.pos = jetPos;
+			myState.rot = jetRot;
 			myState.id = myClientId;
 			net.sendState(myState);
 			lastNetworkSend = now;
@@ -399,11 +423,11 @@ int main()
 				printf("  Position: (%.2f, %.2f, %.2f)\n", savedPkt.px, savedPkt.py, savedPkt.pz);
 				printf("  Rotation: (%.2f, %.2f, %.2f)\n", savedPkt.rx, savedPkt.ry, savedPkt.rz);
 
-				helicopterPos = glm::vec3(savedPkt.px, savedPkt.py, savedPkt.pz);
-				helicopterRot = glm::vec3(savedPkt.rx, savedPkt.ry, savedPkt.rz);
+				jetPos = glm::vec3(savedPkt.px, savedPkt.py, savedPkt.pz);
+				jetRot = glm::vec3(savedPkt.rx, savedPkt.ry, savedPkt.rz);
 
-				myState.pos = helicopterPos;
-				myState.rot = helicopterRot;
+				myState.pos = jetPos;
+				myState.rot = jetRot;
 
 				receivedSavedData = true;
 			}

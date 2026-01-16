@@ -5,14 +5,14 @@ C:\Projects\OpenGL\Window.h(16,35): warning C4244: 'return': conversion from 'GL
 C:\Projects\OpenGL\Window.h(17,36): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
   (compiling source file 'OpenGLApp.cpp')
   
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared\minwindef.h(130,9): warning C4005: 'APIENTRY': macro redefinition
   (compiling source file 'OpenGLApp.cpp')
-      C:\Projects\OpenGL\glfw\include\GLFW\glfw3.h(123,1):
+      C:\Projects\OpenGL\glfw\include\GLFW\glfw3.h(123,11):
       see previous definition of 'APIENTRY'
   
-C:\Projects\OpenGL\OpenGLApp.cpp(333,15): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Projects\OpenGL\OpenGLApp.cpp(340,15): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
   Generating code
-  2 of 1233 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  1 of 1259 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     7 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
